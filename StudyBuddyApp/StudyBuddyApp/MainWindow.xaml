@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudyBuddyApp"
         mc:Ignorable="d"
-        Title="Study Buddy" Height="450" Width="800">
+        Title="Study Buddy" Height="750" Width="1200" ResizeMode="CanMinimize">
     <Grid>
-        
+        <TextBlock TextAlignment="Center" FontSize="40">Welcome to Study Buddy</TextBlock>
     </Grid>
 </Window>

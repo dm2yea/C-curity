@@ -23,6 +23,7 @@ namespace StudyBuddyApp
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }
