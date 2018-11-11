@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Study Buddy" Height="750" Width="1200" ResizeMode="CanMinimize">
     <Grid>
-        <TextBlock TextAlignment="Center" FontSize="40">Welcome to Study Buddy</TextBlock>
+        <Frame x:Name="Main" Margin="0,0,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

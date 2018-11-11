@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace StudyBuddyApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EditMode.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditMode : Page
     {
-        public MainWindow()
+        public EditMode()
         {
             InitializeComponent();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Main.Content = new Home();
         }
     }
 }
