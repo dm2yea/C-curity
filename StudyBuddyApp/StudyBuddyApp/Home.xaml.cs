@@ -21,9 +21,12 @@ namespace StudyBuddyApp
     /// </summary>
     public partial class Home : Page
     {
+        public Boolean mode = true;
+
         public Home()
         {
             InitializeComponent();
+            
         }
 
         private void NewModule(object sender, RoutedEventArgs e)
@@ -46,6 +49,36 @@ namespace StudyBuddyApp
             doc.DocumentElement.AppendChild(newElem);
             doc.Save(writer);
             writer.Close(); //closes the writer so we can later edit it in edit mode
+        }
+    
+        private void image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                BrushConverter bc = new BrushConverter();
+                
+                if (mode)
+                {
+                    
+                    image.BeginInit();
+                    image.Source = new BitmapImage(new Uri("Resources/grey-switch.jpg", UriKind.RelativeOrAbsolute));
+                    image.EndInit();
+                    newModuleButton.IsEnabled = true;
+                    rectangle.Fill = (Brush)bc.ConvertFrom("#FF808080");
+                    mode = false;                
+                   
+                }
+
+                else
+                {
+                    image.BeginInit();
+                    image.Source = new BitmapImage(new Uri("Resources/blue-switch.jpg", UriKind.RelativeOrAbsolute));
+                    image.EndInit();
+                    newModuleButton.IsEnabled =false;
+                    rectangle.Fill = (Brush)bc.ConvertFrom("#FF3399FF");
+                    mode = true;
+                }
+            }
         }
     }
 }
