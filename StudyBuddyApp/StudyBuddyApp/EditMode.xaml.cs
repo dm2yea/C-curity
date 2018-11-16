@@ -65,22 +65,25 @@ namespace StudyBuddyApp
         private void Click_Chapter(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
-            NamePopup.IsOpen = false;
+            NamePopup.IsOpen = true;
         }
 
         private void Click_Section(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
         }
 
         private void Click_Sub(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
         }
 
         private void Click_Quiz(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
         }
 
     }

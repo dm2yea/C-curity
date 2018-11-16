@@ -30,7 +30,7 @@
         <Button Content="Save" Grid.Column="4" Height="40" Width="60" Click="Button_Click" Margin="153,21,26,89" RenderTransformOrigin="0.758,-0.325"/>
         <TextBlock x:Name="box" Text="Edit Mode" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="53,73,77,45"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="30" Margin="143,91,0,0" Grid.Row="4" VerticalAlignment="Top" Width="30" Source="Resources/plus-4-xxl.png" MouseDown="Click_Add" RenderTransformOrigin="0.367,0.433"/>
-        <Popup x:Name="AddPopup" Placement="Mouse" HorizontalOffset="-100" VerticalOffset="-100" AllowsTransparency="True" OpacityMask="White">
+        <Popup x:Name="AddPopup" PlacementRectangle="480,480,500,500">
             <Grid Height="190" Width="372" RenderTransformOrigin="0.453,0.517" Background="Gray">
                 <Label x:Name ="Pop_Up_Text" Content="Choose which you would like to add:" />
                 <Button x:Name="Chapter_Button" Content="Chapter" Margin="55,40,242,89" Click="Click_Chapter" />
@@ -39,9 +39,11 @@
                 <Button x:Name="Quiz_Button" Content="Quiz" Margin="239,123,57,6" Click="Click_Quiz"/>
             </Grid>
         </Popup>
-        <Popup x:Name="NamePopup" >
-            <TextBox x:Name="textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435"/>
+        <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
+            <Grid Height="36" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
+            </Grid>
         </Popup>
-        
+
     </Grid>
 </Page>
