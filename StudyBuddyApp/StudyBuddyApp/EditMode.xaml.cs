@@ -39,10 +39,8 @@ namespace StudyBuddyApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            XElement test = XElement.Load(@"module_data.xml");
             XmlDocument doc = new XmlDocument();
-            Console.WriteLine(test);
-            doc.LoadXml(test.ToString());
+            doc.Load(@"module_data.xml");
             Console.WriteLine(doc);
 
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -52,6 +50,28 @@ namespace StudyBuddyApp
             XmlElement newElem = doc.CreateElement("Chapter");
             newElem.InnerText = "INSERT_CHAPTER_NAME";
             doc.DocumentElement.AppendChild(newElem);
+            doc.Save(writer);
+            writer.Close();
+            test();
+        }
+
+        private void test()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(@"module_data.xml");
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+
+            XmlWriter writer = XmlWriter.Create("module_data.xml", settings);
+            XmlElement e1 = (XmlElement)doc.SelectSingleNode("/Module/" + "Chapter");
+            XmlElement elem = doc.CreateElement("Section");
+            elem.InnerText = "SECTION_NAME";
+            e1.AppendChild(elem);
+            XmlElement elem2 = doc.CreateElement("Quiz");
+            elem2.InnerText = "QUIZ_CONTENT";
+            e1.AppendChild(elem2);
+
             doc.Save(writer);
             writer.Close();
         }

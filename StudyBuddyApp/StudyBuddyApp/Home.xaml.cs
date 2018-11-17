@@ -33,17 +33,13 @@ namespace StudyBuddyApp
 
             //once we enter in the document name, we will initialize the xml doc before opening into edit mode
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml("<name>WHATEVER_MODULE_NAME_HERE</name>");
+            doc.LoadXml("<Module>WHATEVER_MODULE_NAME_HERE</Module>");
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             // Save the document to a file and auto-indent the output.
             XmlWriter writer = XmlWriter.Create("module_data.xml", settings);
 
-            // Add a price element.
-            XmlElement newElem = doc.CreateElement("price");
-            newElem.InnerText = "10.95";
-            doc.DocumentElement.AppendChild(newElem);
             doc.Save(writer);
             writer.Close(); //closes the writer so we can later edit it in edit mode
         }
