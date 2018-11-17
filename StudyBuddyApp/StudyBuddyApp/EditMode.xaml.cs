@@ -75,5 +75,36 @@ namespace StudyBuddyApp
             doc.Save(writer);
             writer.Close();
         }
+
+        //Creat pop-up when "plus" button is clicked for user to create new Chapter/Section/Subsection/Quiz
+        private void Click_Add(object sender, MouseButtonEventArgs e)
+        {
+            AddPopup.IsOpen = true;
+        }
+
+        private void Click_Chapter(object sender, RoutedEventArgs e)
+        {
+            AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
+        }
+
+        private void Click_Section(object sender, RoutedEventArgs e)
+        {
+            AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
+        }
+
+        private void Click_Sub(object sender, RoutedEventArgs e)
+        {
+            AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
+        }
+
+        private void Click_Quiz(object sender, RoutedEventArgs e)
+        {
+            AddPopup.IsOpen = false;
+            NamePopup.IsOpen = true;
+        }
+
     }
 }
