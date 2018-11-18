@@ -41,5 +41,11 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
+        <Popup x:Name="NamePopup" PlacementRectangle="500,400,500,500">
+            <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "#FF3399FF">
+                <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
+                <Button x:Name="Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="-70, 25, 0, 0" Click = "Click_Name_Ok"/>
+            </Grid>
+        </Popup>
     </Grid>
 </Page>

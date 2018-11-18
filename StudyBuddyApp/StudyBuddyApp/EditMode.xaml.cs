@@ -31,7 +31,12 @@ namespace StudyBuddyApp
             TitleBar.Children.Add(label2); //The sidebar has the name of TitleBar in xaml so we can add children to it programatically 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Exit_To_Home(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Home());
+        }
+
+            private void Button_Click(object sender, RoutedEventArgs e)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(@"module_data.xml");
@@ -88,16 +93,15 @@ namespace StudyBuddyApp
             NamePopup.IsOpen = true;
         }
 
-        private void Click_Sub(object sender, RoutedEventArgs e)
+        private void Click_Quiz(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
             NamePopup.IsOpen = true;
         }
 
-        private void Click_Quiz(object sender, RoutedEventArgs e)
+        private void Click_Quit(object sender, RoutedEventArgs e)
         {
             AddPopup.IsOpen = false;
-            NamePopup.IsOpen = true;
         }
 
         private void Click_Name_Ok(object sender, RoutedEventArgs e)

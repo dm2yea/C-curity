@@ -19,6 +19,8 @@ namespace StudyBuddyApp
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
+
+    
     public partial class Home : Page
     {
         public Boolean mode = true;
@@ -31,20 +33,10 @@ namespace StudyBuddyApp
 
         private void NewModule(object sender, RoutedEventArgs e)
         {
-            // Navigate to the page, using the NavigationService
-            this.NavigationService.Navigate(new EditMode());
 
-            //once we enter in the document name, we will initialize the xml doc before opening into edit mode
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml("<Module>WHATEVER_MODULE_NAME_HERE</Module>");
+            NamePopup.IsOpen = true;
 
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            // Save the document to a file and auto-indent the output.
-            XmlWriter writer = XmlWriter.Create("module_data.xml", settings);
 
-            doc.Save(writer);
-            writer.Close(); //closes the writer so we can later edit it in edit mode
         }
     
         private void image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -75,6 +67,26 @@ namespace StudyBuddyApp
                     mode = true;
                 }
             }
+        }
+
+        private void Click_Name_Ok(object sender, RoutedEventArgs e)
+        {
+            NamePopup.IsOpen = false;
+
+            // Navigate to the page, using the NavigationService
+            this.NavigationService.Navigate(new EditMode());
+
+            //once we enter in the document name, we will initialize the xml doc before opening into edit mode
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml("<Module>WHATEVER_MODULE_NAME_HERE</Module>");
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            // Save the document to a file and auto-indent the output.
+            XmlWriter writer = XmlWriter.Create("module_data.xml", settings);
+
+            doc.Save(writer);
+            writer.Close(); //closes the writer so we can later edit it in edit mode
         }
     }
 }
