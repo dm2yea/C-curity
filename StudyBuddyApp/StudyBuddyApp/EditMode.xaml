@@ -24,8 +24,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
-        <DockPanel Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0">
-            <Label x:Name="Chapter1Label" Content="Chapter 1" Height="449.6" VerticalAlignment="Top"/>
+        <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0">
         </DockPanel>
         <Button Content="Save" Grid.Column="4" Height="40" Width="60" Click="Button_Click" Margin="153,21,26,89" RenderTransformOrigin="0.758,-0.325"/>
         <TextBlock x:Name="box" Text="Edit Mode" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="53,73,77,45"/>
@@ -40,8 +39,9 @@
             </Grid>
         </Popup>
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
-            <Grid Height="36" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
+            <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
+                <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
+                <Button x:Name="Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="-70, 25, 0, 0" Click = "Click_Name_Ok"/>
             </Grid>
         </Popup>
 

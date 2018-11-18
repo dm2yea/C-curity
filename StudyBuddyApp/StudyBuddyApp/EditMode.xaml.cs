@@ -25,16 +25,10 @@ namespace StudyBuddyApp
         public EditMode()
         {
             InitializeComponent();
-
-            //this is just me messing with label names and seeing if we can change them after they are created
-            string test = Chapter1Label.ToString();
-            Console.WriteLine(test);
-            Console.WriteLine(Chapter1Label.Name);
-            Chapter1Label.Name = "Label1";
-            Chapter1Label.Content = "TESTING";
-            Console.WriteLine(Chapter1Label.Name);
+            //testing adding a label to the sidebar
             Label label2 = new Label();
             label2.Content = "SOMETHING";
+            TitleBar.Children.Add(label2); //The sidebar has the name of TitleBar in xaml so we can add children to it programatically 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -104,6 +98,17 @@ namespace StudyBuddyApp
         {
             AddPopup.IsOpen = false;
             NamePopup.IsOpen = true;
+        }
+
+        private void Click_Name_Ok(object sender, RoutedEventArgs e)
+        {
+            //will need to know what kind of section is being added, so if we don't want to make 4 different name popups 
+            //for each type then we'll want to add some kind of flag variable
+            NamePopup.IsOpen = false;
+            Label newLabel = new Label();
+            newLabel.Content = nameTextBox.Text;
+            TitleBar.Children.Add(newLabel); //creates a label and adds it to the title bar on the left side, but not underneath??
+            
         }
 
     }
