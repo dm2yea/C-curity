@@ -24,28 +24,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
-        <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0">
-        </DockPanel>
-        <Button Content="Save" Grid.Column="4" Height="40" Click="Button_Click" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
+        <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
+        <Button Content="Save" Grid.Column="4" Height="40" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
         <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
         <TextBlock x:Name="box" Text="Edit Mode" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="53,73,77,45"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="30" Margin="143,91,0,0" Grid.Row="4" VerticalAlignment="Top" Width="30" Source="Resources/plus-4-xxl.png" MouseDown="Click_Add" RenderTransformOrigin="0.367,0.433"/>
-        <Popup x:Name="AddPopup" PlacementRectangle="480,480,500,500">
-            <Grid Height="190" Width="372" RenderTransformOrigin="0.453,0.517" Background="Gray">
-                <Label x:Name ="Pop_Up_Text" Content="Choose which you would like to add:" />
-                <Button x:Name="Chapter_Button" Content="Chapter" Margin="20,40,277,89" Click="Click_Chapter" />
-                <Button x:Name="Section_Button" Content="Section" Margin="177,40,120,89" Click="Click_Section" RenderTransformOrigin="0.547,0.459"/>
-                <Button x:Name="Quit_Button" Content="Quit" Margin="326,10,10,154" Click="Click_Quit"/>
-                <Button x:Name="Quiz_Button" Content="Quiz" Margin="101,119,195,10" Click="Click_Quiz"/>
-            </Grid>
-        </Popup>
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
             <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
                 <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
                 <Button x:Name="Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="-70, 25, 0, 0" Click = "Click_Name_Ok"/>
+                <Button x:Name="Cancel_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Cancel" Margin="74,34,10,7" Click = "Click_Cancel"/>
             </Grid>
         </Popup>
-
-
+        <Button Content="Add Chapter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,10,0,0" Grid.Row="4" Click="Click_Chapter"/>
+        <Button Content="Add Section" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.952,29.46" Margin="49,53,0,0" Grid.Row="4" Click="Click_Section"/>
+        <Button Content="Add Quiz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,95,0,0" Grid.Row="4" Click="Click_Quiz"/>
     </Grid>
 </Page>

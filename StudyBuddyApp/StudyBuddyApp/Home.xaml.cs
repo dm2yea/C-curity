@@ -16,27 +16,20 @@ using System.Xml;
 
 namespace StudyBuddyApp
 {
-    /// <summary>
-    /// Interaction logic for Home.xaml
-    /// </summary>
+    //Interaction logic for Home.xaml
 
-    
     public partial class Home : Page
     {
-        public Boolean mode = true;
+        public Boolean viewMode = true;
 
         public Home()
         {
             InitializeComponent();
-            
         }
 
         private void NewModule(object sender, RoutedEventArgs e)
         {
-
             NamePopup.IsOpen = true;
-
-
         }
     
         private void image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -45,18 +38,15 @@ namespace StudyBuddyApp
             {
                 BrushConverter bc = new BrushConverter();
                 
-                if (mode)
+                if (viewMode)
                 {
-                    
                     image.BeginInit();
                     image.Source = new BitmapImage(new Uri("Resources/grey-switch.jpg", UriKind.RelativeOrAbsolute));
                     image.EndInit();
                     newModuleButton.IsEnabled = true;
                     rectangle.Fill = (Brush)bc.ConvertFrom("#FF808080");
-                    mode = false;                
-                   
+                    viewMode = false;                
                 }
-
                 else
                 {
                     image.BeginInit();
@@ -64,29 +54,32 @@ namespace StudyBuddyApp
                     image.EndInit();
                     newModuleButton.IsEnabled =false;
                     rectangle.Fill = (Brush)bc.ConvertFrom("#FF3399FF");
-                    mode = true;
+                    viewMode = true;
                 }
             }
         }
 
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
+            String moduleName = nameTextBox.Text;
             NamePopup.IsOpen = false;
-
-            // Navigate to the page, using the NavigationService
-            this.NavigationService.Navigate(new EditMode());
 
             //once we enter in the document name, we will initialize the xml doc before opening into edit mode
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml("<Module>WHATEVER_MODULE_NAME_HERE</Module>");
+            doc.LoadXml("<Module><ModuleName>" + moduleName + "</ModuleName><ChapterCount>"+0+"</ChapterCount></Module>");
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             // Save the document to a file and auto-indent the output.
-            XmlWriter writer = XmlWriter.Create("module_data.xml", settings);
-
+            XmlWriter writer = XmlWriter.Create(moduleName + ".xml", settings);
             doc.Save(writer);
             writer.Close(); //closes the writer so we can later edit it in edit mode
+
+            //saves module name to use for opening
+            ModuleData.ModuleName = moduleName;
+
+            // Navigate to edit page
+            this.NavigationService.Navigate(new EditMode());
         }
     }
 }
