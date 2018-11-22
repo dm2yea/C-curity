@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Data;
+using System.IO;
 
 namespace StudyBuddyApp
 {
@@ -25,6 +27,7 @@ namespace StudyBuddyApp
         public Home()
         {
             InitializeComponent();
+            readingXmlFiles();
         }
 
         private void NewModule(object sender, RoutedEventArgs e)
@@ -39,21 +42,21 @@ namespace StudyBuddyApp
                 BrushConverter bc = new BrushConverter();
                 
                 if (viewMode)
-                {
-                    image.BeginInit();
-                    image.Source = new BitmapImage(new Uri("Resources/grey-switch.jpg", UriKind.RelativeOrAbsolute));
-                    image.EndInit();
+                {                   
+                    image.Source = new BitmapImage(new Uri("Resources/grey-switch.jpg", UriKind.RelativeOrAbsolute));                    
                     newModuleButton.IsEnabled = true;
                     rectangle.Fill = (Brush)bc.ConvertFrom("#FF808080");
+                    ScrollViewer.Background = (Brush)bc.ConvertFrom("#FF808080");
+                    ScrollGrid.Background = (Brush)bc.ConvertFrom("#FF808080");
                     viewMode = false;                
                 }
                 else
-                {
-                    image.BeginInit();
-                    image.Source = new BitmapImage(new Uri("Resources/blue-switch.jpg", UriKind.RelativeOrAbsolute));
-                    image.EndInit();
+                {                   
+                    image.Source = new BitmapImage(new Uri("Resources/blue-switch.jpg", UriKind.RelativeOrAbsolute));                   
                     newModuleButton.IsEnabled =false;
                     rectangle.Fill = (Brush)bc.ConvertFrom("#FF3399FF");
+                    ScrollViewer.Background = (Brush)bc.ConvertFrom("#FF3399FF");
+                    ScrollGrid.Background = (Brush)bc.ConvertFrom("#FF3399FF");
                     viewMode = true;
                 }
             }
@@ -81,5 +84,88 @@ namespace StudyBuddyApp
             // Navigate to edit page
             this.NavigationService.Navigate(new EditMode());
         }
+
+
+
+        //Handles event when user clicks on the Module they want to open
+        public void Module_Click(object sender, RoutedEventArgs e)
+        {
+            label.Content = "Clicked";
+        }
+
+        //used to position Module correctly on home page
+        int location = 20;
+
+        //This creates the Module Icon on the Home Page when an XML file is read
+        public void CreateModuleIcon(String title, String score)
+        {
+            Grid grid = new Grid();
+            grid.Height = 100;
+            grid.Height = 100;
+            grid.Width = 100;
+            grid.HorizontalAlignment = HorizontalAlignment.Left;
+            grid.VerticalAlignment = VerticalAlignment.Center;
+
+           grid.Margin = new Thickness(location, 10, 0, 0);
+            ScrollGrid.Children.Add(grid);
+            location += 200;
+            grid.Background = new SolidColorBrush(Colors.White);
+            grid.MouseDown += new MouseButtonEventHandler(Module_Click);
+
+
+            Label nameLabel = new Label();
+            nameLabel.Height = 50;
+            nameLabel.Width = 100;
+            nameLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            nameLabel.VerticalAlignment = VerticalAlignment.Top;
+            nameLabel.Content = title;
+            grid.Children.Add(nameLabel);
+
+            Label quizGradeLabel = new Label();
+            quizGradeLabel.Height = 50;
+            quizGradeLabel.Width = 100;
+            quizGradeLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            quizGradeLabel.VerticalAlignment = VerticalAlignment.Bottom;
+            quizGradeLabel.Content = "Quiz Average: " + score;
+            grid.Children.Add(quizGradeLabel);
+
+            ScrollGrid.Width = ScrollGrid.Width + 200;
+            ScrollPanel.Width = ScrollPanel.Width + 200;
+
+        }
+
+        //this reads the XML files in specified location
+        public void readingXmlFiles()
+        {
+            string[] xmlfinder = Directory.GetFiles(@"C:/Users/Mark/source/repos/StudyBuddy/StudyBuddyApp/StudyBuddyApp/bin/Debug", "*.xml");
+            foreach (string filename in xmlfinder)
+            {
+                XmlTextReader reader = new XmlTextReader(filename);
+                XmlNodeType type;
+
+                String moduleName = null;
+                String quizAverage = null;
+
+                while (reader.Read())
+                {
+                    type = reader.NodeType;
+                    if (type == XmlNodeType.Element)
+                    {
+                        if (reader.Name == "ModuleName")
+                        {
+                            reader.Read();
+                            moduleName = reader.Value;
+                        }
+                        if (reader.Name == "QuizAverage")
+                        {
+                            reader.Read();
+                            quizAverage = reader.Value;
+                        }
+                    }
+                }
+                CreateModuleIcon(moduleName, quizAverage);
+            }
+        }
+
     }
 }
