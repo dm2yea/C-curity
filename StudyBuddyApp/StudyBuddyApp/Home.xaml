@@ -25,13 +25,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle x:Name="rectangle" Fill="#FF3399FF" HorizontalAlignment="Left" Height="590" Margin="-4,10,0,0" Grid.Row="1" Grid.RowSpan="4" Stroke="Black" VerticalAlignment="Top" Width="1204" Grid.ColumnSpan="6"/>
-        <TextBlock Grid.ColumnSpan="4" FontSize="48" TextAlignment="Center" Margin="30,19,150,1"><Run FontSize="60" Text="Welcome to Study Buddy"/><LineBreak/><Run/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Title" Grid.ColumnSpan="4" FontSize="48" TextAlignment="Center" Margin="30,19,150,1"><Run FontSize="60" Text="Welcome to Study Buddy"/><LineBreak/><Run/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
 
         <Button x:Name="newModuleButton" Content="New Module" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="2" Width="141" Margin="18,19,71,23" Background="White" Click="NewModule" IsEnabled="False"/>
         <Button x:Name="openModuleButton" Content="Open Module" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="3" Width="141" Margin="18,21,71,21" Background="White" Click="NewModule" RenderTransformOrigin="0.15,0.554"/>
         <Label x:Name="label" Content="Edit Mode" Grid.Column="4" HorizontalAlignment="Left" Margin="77,30,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Study Mode" Grid.Column="3" HorizontalAlignment="Left" Margin="60,30,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="image" Grid.Column="3" Margin="144,10,162,72" Source="Resources/blue-switch.jpg" MouseDown="image_MouseDown" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+
+        <Image x:Name="image" Grid.Column="3" Margin="144,10,162,72" Source="Resources/blue-switch.jpg" MouseDown="Image_MouseDown" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -47,5 +48,11 @@
                 <Button x:Name="Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="-70, 25, 0, 0" Click = "Click_Name_Ok"/>
             </Grid>
         </Popup>
+
+        <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="41,37,95,0" Background="#FF3399FF" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="2" Height="235" VerticalAlignment="Top">
+            <StackPanel Name ="ScrollPanel" Width="102" Height="177">
+                <Grid x:Name="ScrollGrid" Margin ="10,10,0,10"  HorizontalAlignment="Left" VerticalAlignment="Top"  Width="82" Height="158" Background="#FF3399FF"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
