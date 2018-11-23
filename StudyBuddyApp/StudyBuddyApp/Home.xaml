@@ -25,7 +25,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Rectangle x:Name="rectangle" Fill="#FF3399FF" HorizontalAlignment="Left" Height="590" Margin="-4,10,0,0" Grid.Row="1" Grid.RowSpan="4" Stroke="Black" VerticalAlignment="Top" Width="1204" Grid.ColumnSpan="6"/>
-        <TextBlock Grid.ColumnSpan="4" FontSize="48" TextAlignment="Center" Margin="30,19,150,1"><Run FontSize="60" Text="Welcome to Study Buddy"/><LineBreak/><Run/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Title" Grid.ColumnSpan="4" FontSize="48" TextAlignment="Center" Margin="30,19,150,1"><Run FontSize="60" Text="Welcome to Study Buddy"/><LineBreak/><Run/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
 
         <Button x:Name="newModuleButton" Content="New Module" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="2" Width="141" Margin="18,19,71,23" Background="White" Click="NewModule" IsEnabled="False"/>
         <Button x:Name="openModuleButton" Content="Open Module" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="3" Width="141" Margin="18,21,71,21" Background="White" Click="NewModule" RenderTransformOrigin="0.15,0.554"/>

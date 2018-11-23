@@ -90,7 +90,19 @@ namespace StudyBuddyApp
         //Handles event when user clicks on the Module they want to open
         public void Module_Click(object sender, RoutedEventArgs e)
         {
-            label.Content = "Clicked";
+            String title = sender.ToString();
+            title = title.Substring(32);
+            int space = title.IndexOf('\n');
+            title = title.Remove(space);
+            ModuleData.ModuleName = title;
+            if (viewMode)
+            {
+                this.NavigationService.Navigate(new StudyMode());
+            }
+            else
+            {
+                this.NavigationService.Navigate(new EditMode());
+            }
         }
 
         //used to position Module correctly on home page
@@ -110,32 +122,21 @@ namespace StudyBuddyApp
             ScrollGrid.Children.Add(grid);
             location += 200;
             grid.Background = new SolidColorBrush(Colors.White);
-            grid.MouseDown += new MouseButtonEventHandler(Module_Click);
 
 
-            Label nameLabel = new Label
+            Button modulebutton = new Button
             {
-                Height = 50,
+                Height = 100,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                Content = title
+                Content = title + "\n\nQuiz Average: " + score
             };
-            grid.Children.Add(nameLabel);
-
-            Label quizGradeLabel = new Label
-            {
-                Height = 50,
-                Width = 100,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Content = "Quiz Average: " + score
-            };
-            grid.Children.Add(quizGradeLabel);
+            modulebutton.Click += Module_Click;
+            grid.Children.Add(modulebutton);
 
             ScrollGrid.Width = ScrollGrid.Width + 200;
             ScrollPanel.Width = ScrollPanel.Width + 200;
-
         }
 
         //this reads the XML files in specified location
