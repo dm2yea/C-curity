@@ -42,31 +42,72 @@ namespace StudyBuddyApp
 
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
+            if(addType == 1)
+            {
+                ModuleData.CurrentChapter = nameTextBox.Text;
+            }
             NamePopup.IsOpen = false;
 
             XDocument doc = XDocument.Load(moduleName + ".xml");
 
             XmlWriterSettings settings = new XmlWriterSettings {Indent = true};
 
+            IEnumerable<XElement> ts = doc.Root.Elements();
+            IEnumerable<XElement> ts2 = doc.Root.Elements().Elements();
+
+            
+
             if (addType == 1)
             {
                 XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0), 
-                    new XElement("SectionQuiz", 0), new XElement("QuizAverage", null));
+                    new XElement("QuizCount", 0), new XElement("QuizAverage", "-"));
                 doc.Root.Add(chapter);
+                ModuleData.CurrentChapter = nameTextBox.Text;
+                foreach (XElement node in ts)
+                {
+                    if (node.Name == "ChapterCount")
+                    {
+                        node.Value = Convert.ToString(ts.Count()-2);
+                    }
+                }
             }
             else if (addType == 2)
             {
-                XElement chapter = new XElement("Section", new XElement("SectionTitle", nameTextBox.Text), new XElement("SectionContent", ""),
+                XElement section = new XElement("Section", new XElement("SectionTitle", nameTextBox.Text), new XElement("SectionContent", "Add some notes"),
                     new XElement("Flagged", 0));
-                doc.Root.Add(chapter);
+                foreach (XElement node in ts2)
+                {
+                    if (node.Value.Equals(ModuleData.CurrentChapter))
+                    {
+                        foreach(XElement node2 in ts2)
+                        {
+                            if(node2.Name == "SectionCount")
+                            {
+                                node2.Value = Convert.ToString(Convert.ToInt32(node2.Value) + 1);
+                            }
+                        }
+                        node.Parent.Add(section);
+                    }
+                }
             }
             else if (addType == 3)
             {
-                XElement chapter = new XElement("Quiz", new XElement("QuizTitle", nameTextBox.Text), new XElement("QuizGrade", null));
-                doc.Root.Add(chapter);
+                XElement quiz = new XElement("Quiz", new XElement("QuizTitle", nameTextBox.Text), new XElement("QuizGrade", "-"));
+                foreach (XElement node in ts2)
+                {
+                    if (node.Value.Equals(ModuleData.CurrentChapter))
+                    {
+                        foreach (XElement node2 in ts2)
+                        {
+                            if (node2.Name == "QuizCount")
+                            {
+                                node2.Value = Convert.ToString(Convert.ToInt32(node2.Value) + 1);
+                            }
+                        }
+                        node.Parent.Add(quiz);
+                    }
+                }
             }
-
-
             doc.Save(moduleName+".xml");
         }
 

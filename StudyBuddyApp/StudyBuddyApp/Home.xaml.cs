@@ -27,7 +27,7 @@ namespace StudyBuddyApp
         public Home()
         {
             InitializeComponent();
-            readingXmlFiles();
+            ReadingXmlFiles();
         }
 
         private void NewModule(object sender, RoutedEventArgs e)
@@ -99,34 +99,38 @@ namespace StudyBuddyApp
         //This creates the Module Icon on the Home Page when an XML file is read
         public void CreateModuleIcon(String title, String score)
         {
-            Grid grid = new Grid();
-            grid.Height = 100;
-            grid.Height = 100;
-            grid.Width = 100;
-            grid.HorizontalAlignment = HorizontalAlignment.Left;
-            grid.VerticalAlignment = VerticalAlignment.Center;
-
-           grid.Margin = new Thickness(location, 10, 0, 0);
+            Grid grid = new Grid
+            {
+                Height = 100,
+                Width = 100,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            grid.Margin = new Thickness(location, 10, 0, 0);
             ScrollGrid.Children.Add(grid);
             location += 200;
             grid.Background = new SolidColorBrush(Colors.White);
             grid.MouseDown += new MouseButtonEventHandler(Module_Click);
 
 
-            Label nameLabel = new Label();
-            nameLabel.Height = 50;
-            nameLabel.Width = 100;
-            nameLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            nameLabel.VerticalAlignment = VerticalAlignment.Top;
-            nameLabel.Content = title;
+            Label nameLabel = new Label
+            {
+                Height = 50,
+                Width = 100,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Content = title
+            };
             grid.Children.Add(nameLabel);
 
-            Label quizGradeLabel = new Label();
-            quizGradeLabel.Height = 50;
-            quizGradeLabel.Width = 100;
-            quizGradeLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            quizGradeLabel.VerticalAlignment = VerticalAlignment.Bottom;
-            quizGradeLabel.Content = "Quiz Average: " + score;
+            Label quizGradeLabel = new Label
+            {
+                Height = 50,
+                Width = 100,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Content = "Quiz Average: " + score
+            };
             grid.Children.Add(quizGradeLabel);
 
             ScrollGrid.Width = ScrollGrid.Width + 200;
@@ -135,9 +139,9 @@ namespace StudyBuddyApp
         }
 
         //this reads the XML files in specified location
-        public void readingXmlFiles()
+        public void ReadingXmlFiles()
         {
-            string[] xmlfinder = Directory.GetFiles(@"C:/Users/Mark/source/repos/StudyBuddy/StudyBuddyApp/StudyBuddyApp/bin/Debug", "*.xml");
+            string[] xmlfinder = Directory.GetFiles(@"C:\Users\16783\source\repos\StudyBuddy\StudyBuddyApp\StudyBuddyApp\bin\Debug", "*.xml");
             foreach (string filename in xmlfinder)
             {
                 XmlTextReader reader = new XmlTextReader(filename);
@@ -166,6 +170,5 @@ namespace StudyBuddyApp
                 CreateModuleIcon(moduleName, quizAverage);
             }
         }
-
     }
 }
