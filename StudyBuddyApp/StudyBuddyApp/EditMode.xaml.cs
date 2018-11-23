@@ -87,15 +87,11 @@ namespace StudyBuddyApp
                     new XElement("Flagged", 0));
                 foreach (XElement node in ts2)
                 {
-                    if (node.Value.Equals(ModuleData.CurrentChapter))
+                    if (node.Value == ModuleData.CurrentChapter)
                     {
-                        foreach(XElement node2 in ts2)
-                        {
-                            if(node2.Name == "SectionCount")
-                            {
-                                node2.Value = Convert.ToString(Convert.ToInt32(node2.Value) + 1);
-                            }
-                        }
+                        XElement parent = node.Parent;
+                        XElement count = parent.Element("SectionCount");
+                        count.Value = Convert.ToString(Convert.ToInt32(count.Value)+1);
                         node.Parent.Add(section);
                     }
                 }
@@ -105,15 +101,11 @@ namespace StudyBuddyApp
                 XElement quiz = new XElement("Quiz", new XElement("QuizTitle", nameTextBox.Text), new XElement("QuizGrade", "-"));
                 foreach (XElement node in ts2)
                 {
-                    if (node.Value.Equals(ModuleData.CurrentChapter))
+                    if (node.Value == ModuleData.CurrentChapter)
                     {
-                        foreach (XElement node2 in ts2)
-                        {
-                            if (node2.Name == "QuizCount")
-                            {
-                                node2.Value = Convert.ToString(Convert.ToInt32(node2.Value) + 1);
-                            }
-                        }
+                        XElement parent = node.Parent;
+                        XElement count = parent.Element("QuizCount");
+                        count.Value = Convert.ToString(Convert.ToInt32(count.Value) + 1);
                         node.Parent.Add(quiz);
                     }
                 }
