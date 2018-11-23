@@ -22,20 +22,24 @@ namespace StudyBuddyApp
 
     public partial class Home : Page
     {
+        //determines study mode or edit mode
         public Boolean viewMode = true;
 
+        //initializes homepage
         public Home()
         {
             InitializeComponent();
             ReadingXmlFiles();
         }
-
+        
+        //opens popup when new module button is clicked
         private void NewModule(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
         }
     
-        private void image_MouseDown(object sender, MouseButtonEventArgs e)
+        //changes colors on the homepage depending on the current mode
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.LeftButton == MouseButtonState.Pressed)
             {
@@ -62,6 +66,7 @@ namespace StudyBuddyApp
             }
         }
 
+        //closes popup when ok button is clicked, creates the initial xml doc, and sends the user to edit mode
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
             String moduleName = nameTextBox.Text;
