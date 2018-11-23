@@ -33,6 +33,16 @@ namespace StudyBuddyApp
             Label label2 = new Label();
             label2.Content = moduleName;
             TitleBar.Children.Add(label2); //The sidebar has the name of TitleBar in xaml so we can add children to it programatically 
+            XDocument doc = XDocument.Load(moduleName + ".xml");
+            IEnumerable<XElement> ts = doc.Root.Elements().Elements();
+            foreach (XElement node in ts)
+            {
+                if (node.Name == "ChapterTitle")
+                {
+                    ModuleData.CurrentChapter = node.Value;
+                    break;
+                }
+            }
         }
 
         private void Exit_To_Home(object sender, RoutedEventArgs e)
