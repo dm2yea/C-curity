@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StudyBuddyApp"
-      mc:Ignorable="d" 
+        mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1200"
       Title="EditMode">
 
@@ -27,7 +27,6 @@
         <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
         <Button Content="Save" Grid.Column="4" Height="40" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
         <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
-        <TextBlock x:Name="box" Text="Edit Mode" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="53,73,77,45"/>
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
             <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
                 <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
@@ -38,5 +37,27 @@
         <Button Content="Add Chapter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,10,0,0" Grid.Row="4" Click="Click_Chapter"/>
         <Button Content="Add Section" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.952,29.46" Margin="49,53,0,0" Grid.Row="4" Click="Click_Section"/>
         <Button Content="Add Quiz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,95,0,0" Grid.Row="4" Click="Click_Quiz"/>
+
+
+
+        <!--Button for adding a quiz question-->
+        <Button Content="Add Question" Grid.Column="4" Height="40" Margin="103,96,48,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Grid.Row="4" Click="Click_Add_Question_Button"/>
+
+        <!--StackPanel where the questions appear-->
+        <StackPanel Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="196,82,0,0" ScrollViewer.CanContentScroll="True">
+
+        </StackPanel>
+ 
+        <!--Popup for adding a quiz question-->
+        <Popup x:Name="QuizPopup" PlacementRectangle="750,500,0,0">
+            <Grid Height="140" Width="414" RenderTransformOrigin="0.453,0.517" Background="#FFB9B9B9">
+                <Button x:Name="Multiple_Choice_Button" HorizontalAlignment ="Center" Width="114" Content="Multiple Choice" Margin="24,40,276,65" Click = "Click_Multiple_Choice_Button"/>
+                <Button x:Name="True_False_Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" Content="True or False" Margin="161,40,0,0" Height="35" Click="Click_True_False_Button"/>
+                <Button x:Name="Fill_Blank_Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Content="Fill in the Blank" Margin="277,40,0,0" Height="35" Click="Click_Fill_Blank_Button"/>
+                <Button x:Name="Quiz_Cancel_Button" HorizontalAlignment ="Center" Width="79" Content="Cancel" Margin="161,97,174,10" Click = "Click_Quiz_Cancel_Button"/>
+                <TextBlock TextWrapping="Wrap" Text="Select a question type." VerticalAlignment="Top" Height="25" Width="153" Margin="138,10,0,0" Foreground="Black" HorizontalAlignment="Left" FontWeight="Bold"/>
+            </Grid>
+        </Popup>
     </Grid>
+
 </Page>
