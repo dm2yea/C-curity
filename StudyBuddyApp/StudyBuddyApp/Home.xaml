@@ -32,7 +32,7 @@
         <Label x:Name="label" Content="Edit Mode" Grid.Column="4" HorizontalAlignment="Left" Margin="77,30,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Study Mode" Grid.Column="3" HorizontalAlignment="Left" Margin="60,30,0,0" VerticalAlignment="Top"/>
 
-        <Image x:Name="image" Grid.Column="3" Margin="144,10,162,72" Source="Resources/blue-switch.jpg" MouseDown="image_MouseDown" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+        <Image x:Name="image" Grid.Column="3" Margin="144,10,162,72" Source="Resources/blue-switch.jpg" MouseDown="Image_MouseDown" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
