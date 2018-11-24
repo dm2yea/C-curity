@@ -26,7 +26,26 @@
         <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
         <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
         <Grid>
-            <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="750" Margin="0,0,0,-599.6" VerticalAlignment="Top" Width="195" />
+            <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="560" Margin="0,0,0,-409.6" VerticalAlignment="Top" Width="195">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <!-- We have to select the item which is right-clicked on -->
+                        <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+                    </Style>
+
+
+                </TreeView.ItemContainerStyle>
+                <TreeViewItem>
+                    <TreeViewItem.ContextMenu>
+                        <ContextMenu x:Name="treeViewContextMenu">
+                            <MenuItem x:Name="flagMenuItem" Header="Flag"/>
+                            <MenuItem x:Name="addSectionMenuItem" Header="Add Section"/>
+                            <MenuItem x:Name="removeItem" Header="Remove Item"/>
+                        </ContextMenu>
+                    </TreeViewItem.ContextMenu>
+                </TreeViewItem>
+
+            </TreeView>
         </Grid>
         <Button Content="Save" Grid.Column="4" Height="40" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
         <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
@@ -50,7 +69,7 @@
         <StackPanel Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="196,82,0,0" ScrollViewer.CanContentScroll="True">
 
         </StackPanel>
- 
+
         <!--Popup for adding a quiz question-->
         <Popup x:Name="QuizPopup" PlacementRectangle="750,500,0,0">
             <Grid Height="140" Width="414" RenderTransformOrigin="0.453,0.517" Background="#FFB9B9B9">
@@ -61,7 +80,7 @@
                 <TextBlock TextWrapping="Wrap" Text="Select a question type." VerticalAlignment="Top" Height="25" Width="153" Margin="138,10,0,0" Foreground="Black" HorizontalAlignment="Left" FontWeight="Bold"/>
             </Grid>
         </Popup>
-        
+
     </Grid>
 
 </Page>

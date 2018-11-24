@@ -376,12 +376,25 @@ namespace StudyBuddyApp
             QuizPopup.IsOpen = false;
         }
 
+        private void TreeViewItem_PreviewMouseRightButtonDown(object sender, MouseEventArgs e)
+        {
+            TreeViewItem item = sender as TreeViewItem;
+            if (item != null)
+            {
+                item.Focus();
+                treeViewContextMenu.IsOpen = true;
+                e.Handled = true;
+                
+            }
+        }
+
         public void show(TreeView tree)
         {
             tree.Items.Clear();
             foreach (Chapter currentChapter in chapters)
             {
                 item = GetTreeView(currentChapter.getItemID().ToString(), currentChapter.getName(), "Chapter.png");
+                
 
                 foreach (section currentSection in currentChapter.GetSectionList())
                 {

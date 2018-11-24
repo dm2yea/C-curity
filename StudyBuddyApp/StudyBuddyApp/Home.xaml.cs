@@ -151,7 +151,7 @@ namespace StudyBuddyApp
         //this reads the XML files in specified location
         public void ReadingXmlFiles()
         {
-            string[] xmlfinder = Directory.GetFiles(@"C:\Users\16783\source\repos\StudyBuddy\StudyBuddyApp\StudyBuddyApp\bin\Debug", "*.xml");
+            string[] xmlfinder = Directory.GetFiles(@"..\..\bin\Debug", "*.xml");
             foreach (string filename in xmlfinder)
             {
                 XmlTextReader reader = new XmlTextReader(filename);
