@@ -56,7 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Chapter.cs" />
     <Compile Include="ModuleData.cs" />
+    <Compile Include="section.cs" />
     <Compile Include="StudyMode.xaml.cs">
       <DependentUpon>StudyMode.xaml</DependentUpon>
     </Compile>

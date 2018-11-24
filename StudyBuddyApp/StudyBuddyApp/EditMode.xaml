@@ -25,6 +25,9 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
         <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
+        <Grid>
+            <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="750" Margin="0,0,0,-599.6" VerticalAlignment="Top" Width="195" />
+        </Grid>
         <Button Content="Save" Grid.Column="4" Height="40" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
         <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
@@ -58,6 +61,7 @@
                 <TextBlock TextWrapping="Wrap" Text="Select a question type." VerticalAlignment="Top" Height="25" Width="153" Margin="138,10,0,0" Foreground="Black" HorizontalAlignment="Left" FontWeight="Bold"/>
             </Grid>
         </Popup>
+        
     </Grid>
 
 </Page>

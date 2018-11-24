@@ -22,10 +22,13 @@ namespace StudyBuddyApp
     /// </summary>
     public partial class EditMode : Page
     {
+        List<Chapter> chapters;
+        TreeViewItem item;
+        int itemCount;
         String moduleName = ModuleData.ModuleName;
         int addType;
 
-        public EditMode()
+        public EditMode(string title)
         {
             InitializeComponent();            
 
@@ -43,6 +46,11 @@ namespace StudyBuddyApp
                     break;
                 }
             }
+            itemCount = 0;
+            chapters = new List<Chapter>();
+            Chapter one = new Chapter(title, "_" + itemCount++);
+            chapters.Add(one);
+            show(treeView);
         }
 
         private void Exit_To_Home(object sender, RoutedEventArgs e)
@@ -80,6 +88,9 @@ namespace StudyBuddyApp
                         node.Value = Convert.ToString(ts.Count()-2);
                     }
                 }
+
+                chapters.Add(new Chapter(nameTextBox.GetLineText(0), "_" + itemCount++));
+                show(treeView);
             }
             else if (addType == 2)
             {
@@ -93,6 +104,36 @@ namespace StudyBuddyApp
                         XElement count = parent.Element("SectionCount");
                         count.Value = Convert.ToString(Convert.ToInt32(count.Value)+1);
                         node.Parent.Add(section);
+                    }
+                }
+
+
+                TreeViewItem item2 = (TreeViewItem)treeView.SelectedItem;
+
+                if (item2 != null)
+                {
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        if (tempChapter.getItemID() == item2.Name)
+                        {
+                            tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++));
+                            show(treeView);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    int x = 0;
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        x++;
+                        if (x == chapters.Count)
+                        {
+                            tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++));
+                            show(treeView);
+                            break;
+                        }
                     }
                 }
             }
@@ -113,27 +154,39 @@ namespace StudyBuddyApp
             doc.Save(moduleName+".xml");
         }
 
+        private void getKeyboardFocus()
+        {
+            nameTextBox.Focus();
+            Keyboard.Focus(nameTextBox);
+            nameTextBox.SelectAll();
+            Ok_Button.IsDefault = true;
+        }
+
         private void Click_Chapter(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
+            getKeyboardFocus();
             addType = 1;
         }
 
         private void Click_Section(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
+            getKeyboardFocus();
             addType = 2;
         }
 
         private void Click_Quiz(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
+            getKeyboardFocus();
             addType = 3;
         }
 
         private void Click_Cancel(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = false;
+            getKeyboardFocus();
             addType = 0;
         }
         
@@ -321,6 +374,54 @@ namespace StudyBuddyApp
         private void Click_Quiz_Cancel_Button(object senter, RoutedEventArgs e)
         {
             QuizPopup.IsOpen = false;
+        }
+
+        public void show(TreeView tree)
+        {
+            tree.Items.Clear();
+            foreach (Chapter currentChapter in chapters)
+            {
+                item = GetTreeView(currentChapter.getItemID().ToString(), currentChapter.getName(), "Chapter.png");
+
+                foreach (section currentSection in currentChapter.GetSectionList())
+                {
+                    TreeViewItem subItem = GetTreeView(currentSection.getItemID().ToString(), currentSection.getName(), "Section.png");
+                    item.Items.Add(subItem);
+                }
+                tree.Items.Add(item);
+                item.ExpandSubtree();
+            }
+
+        }
+
+        private TreeViewItem GetTreeView(string name, string text, string imagePath)
+        {
+            TreeViewItem item = new TreeViewItem();
+            item.Name = name;
+            item.IsExpanded = false;
+
+            // create stack panel
+            StackPanel stack = new StackPanel();
+            stack.Orientation = Orientation.Horizontal;
+
+            // create Image
+            Image image = new Image();
+            Uri img = new Uri("Resources/" + imagePath, UriKind.RelativeOrAbsolute);
+            image.Source = new BitmapImage(img);
+            image.Width = 8;
+            image.Height = 8;
+            // Label
+            Label lbl = new Label();
+            lbl.Content = text;
+
+
+            // Add into stack
+            stack.Children.Add(image);
+            stack.Children.Add(lbl);
+
+            // assign stack to header
+            item.Header = stack;
+            return item;
         }
     }
 }

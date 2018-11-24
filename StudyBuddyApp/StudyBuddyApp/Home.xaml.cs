@@ -36,6 +36,10 @@ namespace StudyBuddyApp
         private void NewModule(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
+            nameTextBox.Focus();
+            Keyboard.Focus(nameTextBox);
+            nameTextBox.SelectAll();
+            Ok_Button.IsDefault = true;
         }
     
         //changes colors on the homepage depending on the current mode
@@ -87,7 +91,7 @@ namespace StudyBuddyApp
             ModuleData.ModuleName = moduleName;
 
             // Navigate to edit page
-            this.NavigationService.Navigate(new EditMode());
+            this.NavigationService.Navigate(new EditMode(moduleName));
         }
 
 
@@ -106,7 +110,7 @@ namespace StudyBuddyApp
             }
             else
             {
-                this.NavigationService.Navigate(new EditMode());
+                this.NavigationService.Navigate(new EditMode(title));
             }
         }
 
