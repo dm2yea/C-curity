@@ -10,5 +10,6 @@ namespace StudyBuddyApp
     {
         public static String ModuleName { get; set; }
         public static String CurrentChapter { get; set; }
+        public static String CurrentSection { get; set; }
     }
 }

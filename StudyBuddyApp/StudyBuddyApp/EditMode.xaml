@@ -28,13 +28,14 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="150" Background="Gray" Margin="0,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="195" Grid.RowSpan="1" RenderTransformOrigin="0.5,0.5"/>
         <Border BorderBrush="Black" Background="Gray" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="-45,0,0,68"/>
         <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
-        
+
         <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="195" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1">
 
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <!-- We have to select the item which is right-clicked on -->
                     <EventSetter Event="PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+                    <EventSetter Event="MouseLeftButtonUp" Handler="Section_Display_Click"/>
                 </Style>
             </TreeView.Resources>
 
@@ -87,6 +88,8 @@
                 <TextBlock TextWrapping="Wrap" Text="Select a question type." VerticalAlignment="Top" Height="25" Width="153" Margin="138,10,0,0" Foreground="Black" HorizontalAlignment="Left" FontWeight="Bold"/>
             </Grid>
         </Popup>
+
+        <StackPanel x:Name="sectionContent" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65"/>
 
     </Grid>
 

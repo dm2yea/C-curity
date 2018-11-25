@@ -56,7 +56,7 @@ namespace StudyBuddyApp
 
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
-            if(addType == 1)
+            if (addType == 1)
             {
                 ModuleData.CurrentChapter = nameTextBox.Text;
             }
@@ -64,16 +64,16 @@ namespace StudyBuddyApp
 
             XDocument doc = XDocument.Load(moduleName + ".xml");
 
-            XmlWriterSettings settings = new XmlWriterSettings {Indent = true};
+            XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
 
             IEnumerable<XElement> ts = doc.Root.Elements();
             IEnumerable<XElement> ts2 = doc.Root.Elements().Elements();
 
-            
+
 
             if (addType == 1)
             {
-                XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0), 
+                XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0),
                     new XElement("QuizCount", 0), new XElement("QuizAverage", "-"));
                 doc.Root.Add(chapter);
                 ModuleData.CurrentChapter = nameTextBox.Text;
@@ -81,7 +81,7 @@ namespace StudyBuddyApp
                 {
                     if (node.Name == "ChapterCount")
                     {
-                        node.Value = Convert.ToString(ts.Count()-2);
+                        node.Value = Convert.ToString(ts.Count() - 2);
                     }
                 }
 
@@ -98,7 +98,7 @@ namespace StudyBuddyApp
                     {
                         XElement parent = node.Parent;
                         XElement count = parent.Element("SectionCount");
-                        count.Value = Convert.ToString(Convert.ToInt32(count.Value)+1);
+                        count.Value = Convert.ToString(Convert.ToInt32(count.Value) + 1);
                         node.Parent.Add(section);
                     }
                 }
@@ -114,6 +114,7 @@ namespace StudyBuddyApp
                         {
                             tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
                             show(treeView);
+                            item2.MouseLeftButtonUp += Section_Display_Click;
                             break;
                         }
                     }
@@ -147,7 +148,7 @@ namespace StudyBuddyApp
                     }
                 }
             }
-            doc.Save(moduleName+".xml");
+            doc.Save(moduleName + ".xml");
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -191,13 +192,13 @@ namespace StudyBuddyApp
             getKeyboardFocus();
             addType = 0;
         }
-        
+
         //opens popup to select question type
         private void Click_Add_Question_Button(object senter, RoutedEventArgs e)
         {
             QuizPopup.IsOpen = true;
         }
-        
+
         int qCount = 0; //question number counter
 
         //method for adding a Multiple Choice question template
@@ -226,7 +227,7 @@ namespace StudyBuddyApp
             t1.Width = 626;
             t1.TextWrapping = TextWrapping.Wrap;
             c1.Children.Add(t1);
-            
+
             //4 radio buttons for the potential answers
             RadioButton rA = new RadioButton();
             rA.Content = "A.";
@@ -399,15 +400,15 @@ namespace StudyBuddyApp
                 else
                 {
                     section sectionToRemove = treeViewItemToSection(treeViewItem);
-                    if(sectionToRemove != null)
+                    if (sectionToRemove != null)
                     {
                         sectionToRemove.getParent().GetSectionList().Remove(sectionToRemove);
                         show(treeView);
                     }
                 }
-                
+
             }
-            
+
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -421,7 +422,7 @@ namespace StudyBuddyApp
         private Chapter treeViewItemToChapter(TreeViewItem item)
         {
             Chapter returnValue = null;
-            foreach(Chapter currentChapter in chapters)
+            foreach (Chapter currentChapter in chapters)
             {
                 if (currentChapter.getItemID() == item.Name)
                 {
@@ -443,11 +444,11 @@ namespace StudyBuddyApp
         private section treeViewItemToSection(TreeViewItem item)
         {
             section returnValue = null;
-            foreach(Chapter currentChapter in chapters)
+            foreach (Chapter currentChapter in chapters)
             {
-                foreach(section currentSection in currentChapter.GetSectionList())
+                foreach (section currentSection in currentChapter.GetSectionList())
                 {
-                    if(currentSection.getItemID() == item.Name)
+                    if (currentSection.getItemID() == item.Name)
                     {
                         returnValue = currentSection;
                         break;
@@ -472,12 +473,12 @@ namespace StudyBuddyApp
             if (treeViewItem != null)
             {
                 Boolean isChapter = false;
-                if(treeViewItemToChapter(treeViewItem) != null)
+                if (treeViewItemToChapter(treeViewItem) != null)
                 {
                     isChapter = true;
                 }
 
-                if(isChapter)
+                if (isChapter)
                 {
                     addSectionMenuItem.IsEnabled = true;
                     removeItem.Header = "Remove Chapter";
@@ -493,7 +494,7 @@ namespace StudyBuddyApp
             }
         }
 
-        
+
         static T VisualUpwardSearch<T>(DependencyObject source) where T : DependencyObject
         {
             DependencyObject returnVal = source;
@@ -527,7 +528,7 @@ namespace StudyBuddyApp
             foreach (Chapter currentChapter in chapters)
             {
                 item = GetTreeView(currentChapter.getItemID(), currentChapter.getName(), "Chapter.png");
-                
+
 
                 foreach (section currentSection in currentChapter.GetSectionList())
                 {
@@ -576,6 +577,31 @@ namespace StudyBuddyApp
             // assign stack to header
             item.Header = stack;
             return item;
+        }
+
+        public void Section_Display_Click(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)sender;
+            ModuleData.CurrentSection = this.Name;
+            XDocument doc = XDocument.Load(moduleName + ".xml");
+            IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+            CreateTextBox("");
+            e.Handled = true;
+        }
+
+        public void CreateTextBox(String content)
+        {
+            TextBox sectionBox = new TextBox()
+            {
+                Height = 500,
+                Width = 710,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Text = content,
+                AcceptsReturn = true,
+                TextWrapping = TextWrapping.Wrap
+            };
+            sectionContent.Children.Add(sectionBox);
         }
     }
 }
