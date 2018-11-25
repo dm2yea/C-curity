@@ -695,30 +695,15 @@ namespace StudyBuddyApp
                   {
                      if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
                      {
+                        sectionTitle.Text = node.Value;
                         XElement tempNode = node.Parent;
                         tempNode = tempNode.Element("SectionContent");
-                        CreateTextBox(tempNode.Value);
+                        sectionContent.Text = tempNode.Value;
                      }
                   }
                 }
             }
             e.Handled = true;
-        }
-
-        public void CreateTextBox(String content)
-        {
-            TextBox sectionBox = new TextBox()
-            {
-                Height = 500,
-                Width = 710,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top,
-                Text = content,
-                AcceptsReturn = true,
-                TextWrapping = TextWrapping.Wrap,
-                Name = "SectionContent"
-            };
-            sectionContent.Children.Add(sectionBox);
         }
 
         private void Click_Warning_Ok(object sender, RoutedEventArgs e)
