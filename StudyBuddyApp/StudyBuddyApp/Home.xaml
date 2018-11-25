@@ -70,6 +70,13 @@
                 <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="There is no module with this name. Please enter a valid module name." VerticalAlignment="Top" FontSize="14" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
         </Popup>
+        <Popup x:Name="moduleDeletedPopup" PlacementRectangle="500,500,500,500">
+            <Grid Height="100" Width="200" RenderTransformOrigin="0.453,0.517" Background= "#FF3399FF">
+                <Button x:Name="module_Deleted_Warning_Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="0,55,0,0" Click = "Click_Module_Deleted_Ok"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="This module seems to have been moved or deleted. Please choose a different module." VerticalAlignment="Top" FontSize="14" TextAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+        </Popup>
+        
 
         <ScrollViewer Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="41,37,95,0" Background="#FF3399FF" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="2" Height="235" VerticalAlignment="Top">
             <StackPanel Name ="ScrollPanel" Width="102" Height="177">

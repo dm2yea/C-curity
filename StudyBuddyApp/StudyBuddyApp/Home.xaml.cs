@@ -126,14 +126,42 @@ namespace StudyBuddyApp
             title = title.Substring(32);
             int space = title.IndexOf('\n');
             title = title.Remove(space);
-            ModuleData.ModuleName = title;
-            if (viewMode)
+            
+            String moduleFile = @"..\..\bin\Debug\" + title + ".xml";
+            if (File.Exists(moduleFile))
             {
-                this.NavigationService.Navigate(new StudyMode());
+                ModuleData.ModuleName = title;
+                if (viewMode)
+                {
+                    this.NavigationService.Navigate(new StudyMode());
+                }
+                else
+                {
+                    this.NavigationService.Navigate(new EditMode(title));
+                }
             }
             else
             {
-                this.NavigationService.Navigate(new EditMode(title));
+                moduleDoesNotExist(title);
+            }
+        }
+
+        private void moduleDoesNotExist(String moduleName)
+        {
+            Grid grid = null;
+            foreach(UIElement tempGrid in ScrollGrid.Children)
+            {
+                grid = (Grid)tempGrid;
+                break;
+            }
+            foreach( UIElement button in grid.Children)
+            {
+                Button tempButton = (Button)button;
+                if(tempButton.Name == "Button_" + moduleName.Replace(' ', '_'))
+                {
+                    moduleDeletedPopup.IsOpen = true;
+                    module_Deleted_Warning_Ok_Button.Focus();
+                }
             }
         }
 
@@ -158,6 +186,7 @@ namespace StudyBuddyApp
 
             Button modulebutton = new Button
             {
+                Name = "Button_" + title.Replace(' ', '_'),
                 Height = 100,
                 Width = 100,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -262,6 +291,11 @@ namespace StudyBuddyApp
         {
             OpenInvalidNameWarningPopup.IsOpen = false;
             open_getKeyboardFocus();
+        }
+
+        private void Click_Module_Deleted_Ok(object sender, RoutedEventArgs e)
+        {
+            moduleDeletedPopup.IsOpen = false;
         }
     }
 }
