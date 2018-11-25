@@ -28,13 +28,16 @@ namespace StudyBuddyApp
         int itemCount;
         String moduleName = ModuleData.ModuleName;
         int addType;
+        XDocument doc;
 
         public EditMode(string title)
         {
             InitializeComponent();
             moduleNameBar.Text = title;
+            itemCount = 0;
+            chapters = new List<Chapter>();
 
-            XDocument doc = XDocument.Load(moduleName + ".xml");
+            doc = XDocument.Load(moduleName + ".xml");
             IEnumerable<XElement> ts = doc.Root.Elements().Elements();
             foreach (XElement node in ts)
             {
@@ -44,8 +47,36 @@ namespace StudyBuddyApp
                     break;
                 }
             }
-            itemCount = 0;
-            chapters = new List<Chapter>();
+
+            foreach (XElement node in ts)
+            {
+                if (node.Name == "ChapterTitle")
+                {
+                    chapters.Add(new Chapter(node.Value, "_" + itemCount++));
+                }
+            }
+
+            IEnumerable<XElement> ts2 = doc.Root.Elements().Elements().Elements();
+            foreach(XElement node in ts2)
+            { 
+                if (node.Name == "SectionTitle")
+                {
+                    XElement parentChapter = node.Parent.Parent;
+                    IEnumerable<XElement> parentChapterElements = parentChapter.Elements();
+                    foreach(XElement childElement in parentChapterElements)
+                    {
+                        if (childElement.Name == "ChapterTitle")
+                        {
+                            Chapter sectionParent = chapterNameAlreadyExists(childElement.Value);
+                            if(sectionParent != null)
+                            {
+                                sectionParent.GetSectionList().Add(new section(node.Value, "_" + itemCount++, sectionParent));
+                            }
+                        }
+                    }
+                }
+            }
+
             show(treeView);
         }
 
@@ -54,13 +85,47 @@ namespace StudyBuddyApp
             this.NavigationService.Navigate(new Home());
         }
 
+        private Chapter chapterNameAlreadyExists(String title)
+        {
+            foreach(Chapter currentChapter in chapters)
+            {
+                if(currentChapter.getName() == title)
+                {
+                    return currentChapter;
+                }
+            }
+            return null;
+        }
+
+        
+
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
             if (addType == 1)
             {
                 ModuleData.CurrentChapter = nameTextBox.Text;
             }
-            NamePopup.IsOpen = false;
+            else
+            {
+                if (treeView.SelectedItem != null)
+                {
+                    Chapter tempChapter = treeViewItemToChapter((TreeViewItem)treeView.SelectedItem);
+                    ModuleData.CurrentChapter = tempChapter.getName();
+                }
+                else
+                {
+                    int x = 0;
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        x++;
+                        if (x == chapters.Count)
+                        {
+                            ModuleData.CurrentChapter = tempChapter.getName();
+                            break;
+                        }
+                    }
+                }
+            }
 
             XDocument doc = XDocument.Load(moduleName + ".xml");
 
@@ -73,20 +138,29 @@ namespace StudyBuddyApp
 
             if (addType == 1)
             {
-                XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0),
-                    new XElement("QuizCount", 0), new XElement("QuizAverage", "-"));
-                doc.Root.Add(chapter);
-                ModuleData.CurrentChapter = nameTextBox.Text;
-                foreach (XElement node in ts)
+                String name = nameTextBox.GetLineText(0);
+                if (chapterNameAlreadyExists(name) == null)
                 {
-                    if (node.Name == "ChapterCount")
+                    XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0),
+                        new XElement("QuizCount", 0), new XElement("QuizAverage", "-"));
+                    doc.Root.Add(chapter);
+                    ModuleData.CurrentChapter = nameTextBox.Text;
+                    foreach (XElement node in ts)
                     {
-                        node.Value = Convert.ToString(ts.Count() - 2);
+                        if (node.Name == "ChapterCount")
+                        {
+                            node.Value = Convert.ToString(ts.Count() - 2);
+                        }
                     }
-                }
 
-                chapters.Add(new Chapter(nameTextBox.GetLineText(0), "_" + itemCount++));
-                show(treeView);
+                    chapters.Add(new Chapter(name, "_" + itemCount++));
+                    show(treeView);
+                }
+                else
+                {
+                    InvalidNameWarningPopup.IsOpen = true;
+                    Warning_Ok_Button.Focus();
+                }
             }
             else if (addType == 2)
             {
@@ -148,7 +222,11 @@ namespace StudyBuddyApp
                     }
                 }
             }
-            doc.Save(moduleName + ".xml");
+            doc.Save(moduleName+".xml");
+            if(InvalidNameWarningPopup.IsOpen == false)
+            {
+                NamePopup.IsOpen = false;
+            }
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -391,9 +469,20 @@ namespace StudyBuddyApp
 
             if (treeViewItem != null)
             {
+                doc = XDocument.Load(moduleName + ".xml");
+
                 Chapter chapterToRemove = treeViewItemToChapter(treeViewItem);
                 if (chapterToRemove != null)
                 {
+                    IEnumerable<XElement> ts = doc.Root.Elements().Elements();
+                    foreach (XElement node in ts)
+                    {
+                        if (node.Name == "ChapterTitle" && node.Value == chapterToRemove.getName())
+                        {
+                            node.Parent.Remove();
+                        }
+                    }
+
                     chapters.Remove(chapterToRemove);
                     show(treeView);
                 }
@@ -402,13 +491,21 @@ namespace StudyBuddyApp
                     section sectionToRemove = treeViewItemToSection(treeViewItem);
                     if (sectionToRemove != null)
                     {
+                        IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+                        foreach (XElement node in ts)
+                        {
+                            if (node.Name == "SectionTitle" && node.Value == sectionToRemove.getName())
+                            {
+                                node.Parent.Remove();
+                            }
+                        }
                         sectionToRemove.getParent().GetSectionList().Remove(sectionToRemove);
                         show(treeView);
                     }
                 }
 
             }
-
+            doc.Save(moduleName + ".xml");
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -473,7 +570,8 @@ namespace StudyBuddyApp
             if (treeViewItem != null)
             {
                 Boolean isChapter = false;
-                if (treeViewItemToChapter(treeViewItem) != null)
+                Chapter tempChapter = treeViewItemToChapter(treeViewItem);
+                if(tempChapter != null)
                 {
                     isChapter = true;
                 }
@@ -482,6 +580,7 @@ namespace StudyBuddyApp
                 {
                     addSectionMenuItem.IsEnabled = true;
                     removeItem.Header = "Remove Chapter";
+                    ModuleData.CurrentChapter = tempChapter.getName();
                 }
                 else
                 {
@@ -602,6 +701,12 @@ namespace StudyBuddyApp
                 TextWrapping = TextWrapping.Wrap
             };
             sectionContent.Children.Add(sectionBox);
+        }
+
+        private void Click_Warning_Ok(object sender, RoutedEventArgs e)
+        {
+            InvalidNameWarningPopup.IsOpen = false;
+            getKeyboardFocus();
         }
     }
 }
