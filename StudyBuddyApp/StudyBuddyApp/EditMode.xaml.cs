@@ -28,6 +28,7 @@ namespace StudyBuddyApp
         int itemCount;
         String moduleName = ModuleData.ModuleName;
         int addType;
+        XDocument doc;
 
         public EditMode(string title)
         {
@@ -36,7 +37,7 @@ namespace StudyBuddyApp
             itemCount = 0;
             chapters = new List<Chapter>();
 
-            XDocument doc = XDocument.Load(moduleName + ".xml");
+            doc = XDocument.Load(moduleName + ".xml");
             IEnumerable<XElement> ts = doc.Root.Elements().Elements();
             foreach (XElement node in ts)
             {
@@ -106,10 +107,25 @@ namespace StudyBuddyApp
             }
             else
             {
-                Chapter tempChapter = treeViewItemToChapter((TreeViewItem)treeView.SelectedItem);
-                ModuleData.CurrentChapter = tempChapter.getName();
+                if (treeView.SelectedItem != null)
+                {
+                    Chapter tempChapter = treeViewItemToChapter((TreeViewItem)treeView.SelectedItem);
+                    ModuleData.CurrentChapter = tempChapter.getName();
+                }
+                else
+                {
+                    int x = 0;
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        x++;
+                        if (x == chapters.Count)
+                        {
+                            ModuleData.CurrentChapter = tempChapter.getName();
+                            break;
+                        }
+                    }
+                }
             }
-            NamePopup.IsOpen = false;
 
             XDocument doc = XDocument.Load(moduleName + ".xml");
 
@@ -142,7 +158,8 @@ namespace StudyBuddyApp
                 }
                 else
                 {
-
+                    InvalidNameWarningPopup.IsOpen = true;
+                    Warning_Ok_Button.Focus();
                 }
             }
             else if (addType == 2)
@@ -205,6 +222,10 @@ namespace StudyBuddyApp
                 }
             }
             doc.Save(moduleName+".xml");
+            if(InvalidNameWarningPopup.IsOpen == false)
+            {
+                NamePopup.IsOpen = false;
+            }
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -447,9 +468,20 @@ namespace StudyBuddyApp
 
             if (treeViewItem != null)
             {
+                doc = XDocument.Load(moduleName + ".xml");
+
                 Chapter chapterToRemove = treeViewItemToChapter(treeViewItem);
                 if (chapterToRemove != null)
                 {
+                    IEnumerable<XElement> ts = doc.Root.Elements().Elements();
+                    foreach (XElement node in ts)
+                    {
+                        if (node.Name == "ChapterTitle" && node.Value == chapterToRemove.getName())
+                        {
+                            node.Parent.Remove();
+                        }
+                    }
+
                     chapters.Remove(chapterToRemove);
                     show(treeView);
                 }
@@ -458,13 +490,21 @@ namespace StudyBuddyApp
                     section sectionToRemove = treeViewItemToSection(treeViewItem);
                     if(sectionToRemove != null)
                     {
+                        IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+                        foreach (XElement node in ts)
+                        {
+                            if (node.Name == "SectionTitle" && node.Value == sectionToRemove.getName())
+                            {
+                                node.Parent.Remove();
+                            }
+                        }
                         sectionToRemove.getParent().GetSectionList().Remove(sectionToRemove);
                         show(treeView);
                     }
                 }
                 
             }
-            
+            doc.Save(moduleName + ".xml");
         }
 
         /* Tanner Chauncy - 11/24/2018
@@ -635,6 +675,12 @@ namespace StudyBuddyApp
             // assign stack to header
             item.Header = stack;
             return item;
+        }
+
+        private void Click_Warning_Ok(object sender, RoutedEventArgs e)
+        {
+            InvalidNameWarningPopup.IsOpen = false;
+            getKeyboardFocus();
         }
     }
 }
