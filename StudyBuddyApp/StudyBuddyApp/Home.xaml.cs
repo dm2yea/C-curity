@@ -39,6 +39,12 @@ namespace StudyBuddyApp
             getKeyboardFocus();
         }
 
+        private void openModule(object sender, RoutedEventArgs e)
+        {
+            OpenNamePopup.IsOpen = true;
+            open_getKeyboardFocus();
+        }
+
         private void getKeyboardFocus()
         {
             nameTextBox.Focus();
@@ -214,6 +220,48 @@ namespace StudyBuddyApp
         {
             InvalidNameWarningPopup.IsOpen = false;
             getKeyboardFocus();
+        }
+
+        private void open_getKeyboardFocus()
+        {
+            OpennameTextBox.Focus();
+            Keyboard.Focus(OpennameTextBox);
+            OpennameTextBox.SelectAll();
+            Open_Ok_Button.IsDefault = true;
+        }
+
+        private void Click_Name_Ok_Open(object sender, RoutedEventArgs e)
+        {
+            String moduleName = OpennameTextBox.Text;
+            String moduleFile = @"..\..\bin\Debug\" + moduleName + ".xml";
+            if (File.Exists(moduleFile))
+            {
+                ModuleData.ModuleName = moduleName;
+                if (viewMode)
+                {
+                    this.NavigationService.Navigate(new StudyMode());
+                }
+                else
+                {
+                    this.NavigationService.Navigate(new EditMode(moduleName));
+                }
+            }
+            else
+            {
+                OpenInvalidNameWarningPopup.IsOpen = true;
+                Open_Warning_Ok_Button.Focus();
+            }
+        }
+
+        private void Click_Name_Cancel_Open(object sender, RoutedEventArgs e)
+        {
+            OpenNamePopup.IsOpen = false;
+        }
+
+        private void Click_Warning_Ok(object sender, RoutedEventArgs e)
+        {
+            OpenInvalidNameWarningPopup.IsOpen = false;
+            open_getKeyboardFocus();
         }
     }
 }
