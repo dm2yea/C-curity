@@ -680,11 +680,28 @@ namespace StudyBuddyApp
 
         public void Section_Display_Click(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem)sender;
+            TreeViewItem item = (TreeViewItem)treeView.SelectedItem;
             ModuleData.CurrentSection = this.Name;
-            XDocument doc = XDocument.Load(moduleName + ".xml");
-            IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
-            CreateTextBox("");
+
+
+            if (item != null)
+            {
+                doc = XDocument.Load(moduleName + ".xml");
+                section sectionCon = treeViewItemToSection(item);
+                if (sectionCon != null)
+                {
+                  IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+                  foreach (XElement node in ts)
+                  {
+                     if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
+                     {
+                        XElement tempNode = node.Parent;
+                        tempNode = tempNode.Element("SectionContent");
+                        CreateTextBox(tempNode.Value);
+                     }
+                  }
+                }
+            }
             e.Handled = true;
         }
 
@@ -698,7 +715,8 @@ namespace StudyBuddyApp
                 VerticalAlignment = VerticalAlignment.Top,
                 Text = content,
                 AcceptsReturn = true,
-                TextWrapping = TextWrapping.Wrap
+                TextWrapping = TextWrapping.Wrap,
+                Name = "SectionContent"
             };
             sectionContent.Children.Add(sectionBox);
         }
