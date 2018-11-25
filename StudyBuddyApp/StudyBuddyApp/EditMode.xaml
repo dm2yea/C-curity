@@ -27,7 +27,16 @@
 
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="150" Background="Gray" Margin="0,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="195" Grid.RowSpan="1" RenderTransformOrigin="0.5,0.5"/>
         <Border BorderBrush="Black" Background="Gray" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="-45,0,0,68"/>
-        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
+        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55">
+            <TextBlock.ContextMenu>
+                <ContextMenu x:Name="textBlockContextMenu" Placement="AbsolutePoint">
+                    <MenuItem x:Name="textBlockRename" Header="Rename Module" Click="Click_Module_Rename"/>
+                </ContextMenu>
+            </TextBlock.ContextMenu>
+        </TextBlock>
+
+        <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
+        <Button x:Name="Confirm_Rename_Button" Height="0" Width="0" Click="Click_Confirm_Rename"/>
 
         <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="195" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1">
 
@@ -96,11 +105,17 @@
             </Grid>
         </Popup>
 
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65">
-            <TextBox x:Name="sectionTitle" Height="59" TextWrapping="Wrap" Margin="0,0,10,0" FontSize="40" TextAlignment="Center"/>
-            <TextBox x:Name="sectionContent" Height="462" TextWrapping="Wrap"/>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65" >
+            <TextBox x:Name="sectionTitle" Height="59" TextWrapping="Wrap" Margin="0,0,0,0" FontSize="40" TextAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+            <TextBox x:Name="sectionContent" AcceptsReturn="true"  Height="462" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1"/>
         </StackPanel>
 
+        <Popup x:Name="ModuleExistsWarningPopup" PlacementRectangle="500,500,500,500">
+            <Grid Height="100" Width="200" RenderTransformOrigin="0.453,0.517" Background= "#FF3399FF">
+                <Button x:Name="Module_Exists_Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="0, 55, 0, 0" Click = "Click_Module_Exists_Ok"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="There is already a module with that name. Please choose a different name." VerticalAlignment="Top" FontSize="13" TextAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+        </Popup>
     </Grid>
 
 </Page>

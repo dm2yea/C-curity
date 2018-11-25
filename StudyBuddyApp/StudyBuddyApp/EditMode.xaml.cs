@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,7 @@ namespace StudyBuddyApp
             }
 
             show(treeView);
+            Rename_textBox.Visibility = Visibility.Hidden;
         }
 
         private void Exit_To_Home(object sender, RoutedEventArgs e)
@@ -710,6 +712,57 @@ namespace StudyBuddyApp
         {
             InvalidNameWarningPopup.IsOpen = false;
             getKeyboardFocus();
+        }
+
+        private void Click_Module_Rename(object sender, RoutedEventArgs e)
+        {
+            Rename_textBox.Text = moduleNameBar.Text;
+            moduleNameBar.Text = "";
+            Rename_textBox.Visibility = Visibility.Visible;
+            Rename_textBox.Focus();
+            Rename_textBox.SelectAll();
+            Confirm_Rename_Button.IsDefault = true;
+        }
+        private void Click_Confirm_Rename(object sender, RoutedEventArgs e)
+        {
+            String oldModuleFile = @"..\..\bin\Debug\" + moduleName + ".xml";
+            String newModuleName = Rename_textBox.Text;
+            String newModuleFile = @"..\..\bin\Debug\" + newModuleName + ".xml";
+
+            if (File.Exists(newModuleFile)){
+                ModuleExistsWarningPopup.IsOpen = true;
+                Module_Exists_Ok_Button.Focus();
+            }
+            else
+            {
+                Rename_textBox.Visibility = Visibility.Hidden;
+                moduleNameBar.Text = newModuleName;
+                saveButton.Focus();
+
+                System.IO.File.Move(oldModuleFile, newModuleFile);
+                ModuleData.ModuleName = newModuleName;
+                moduleName = ModuleData.ModuleName;
+                doc = XDocument.Load(moduleName + ".xml");
+                IEnumerable<XElement> ts = doc.Root.Elements();
+                foreach (XElement node in ts)
+                {
+                    if (node.Name == "ModuleName")
+                    {
+                        node.Value = moduleName;
+                        break;
+                    }
+                }
+                doc.Save(moduleName + ".xml");
+            }
+        }
+        
+
+        private void Click_Module_Exists_Ok(object sender, RoutedEventArgs e)
+        {
+            ModuleExistsWarningPopup.IsOpen = false;
+            Rename_textBox.Focus();
+            Rename_textBox.SelectAll();
+            Confirm_Rename_Button.IsDefault = true;
         }
     }
 }
