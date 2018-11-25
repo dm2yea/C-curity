@@ -9,6 +9,7 @@
       Title="EditMode">
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -23,32 +24,41 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
-        <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
-        <Grid>
-            <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="560" Margin="0,0,0,-409.6" VerticalAlignment="Top" Width="195">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <!-- We have to select the item which is right-clicked on -->
-                        <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
-                    </Style>
 
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="150" Background="Gray" Margin="0,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="195" Grid.RowSpan="1" RenderTransformOrigin="0.5,0.5"/>
+        <Border BorderBrush="Black" Background="Gray" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="-45,0,0,68"/>
+        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
+        
+        <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="195" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1">
 
-                </TreeView.ItemContainerStyle>
-                <TreeViewItem>
-                    <TreeViewItem.ContextMenu>
-                        <ContextMenu x:Name="treeViewContextMenu">
-                            <MenuItem x:Name="flagMenuItem" Header="Flag"/>
-                            <MenuItem x:Name="addSectionMenuItem" Header="Add Section"/>
-                            <MenuItem x:Name="removeItem" Header="Remove Item"/>
-                        </ContextMenu>
-                    </TreeViewItem.ContextMenu>
-                </TreeViewItem>
+            <TreeView.Resources>
+                <Style TargetType="TreeViewItem">
+                    <!-- We have to select the item which is right-clicked on -->
+                    <EventSetter Event="PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+                </Style>
+            </TreeView.Resources>
 
-            </TreeView>
-        </Grid>
-        <Button Content="Save" Grid.Column="4" Height="40" Margin="85,23,95,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
-        <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="addChapterMenuItem" Header="Add Chapter" Click="Click_Chapter"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
+
+            <TreeViewItem>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu x:Name="treeViewContextMenu">
+                        <MenuItem x:Name="flagMenuItem" Header="Flag"/>
+                        <MenuItem x:Name="addSectionMenuItem" Header="Add Section" Click="Click_Section"/>
+                        <MenuItem x:Name="removeItem" Header="Remove Item" Click="Click_Remove_Item"/>
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
+
+        </TreeView>
+
+        <Button x:Name="saveButton" Content="Save" Grid.Column="4" Height="40" Margin="90,21,90,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
+        <Button x:Name="exitButton" Content="Exit" Grid.Column="4" Height="40" Margin="170,21,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
+
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
             <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
                 <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
@@ -56,19 +66,16 @@
                 <Button x:Name="Cancel_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Cancel" Margin="74,34,10,7" Click = "Click_Cancel"/>
             </Grid>
         </Popup>
-        <Button Content="Add Chapter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,10,0,0" Grid.Row="4" Click="Click_Chapter"/>
-        <Button Content="Add Section" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.952,29.46" Margin="49,53,0,0" Grid.Row="4" Click="Click_Section"/>
-        <Button Content="Add Quiz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="49,95,0,0" Grid.Row="4" Click="Click_Quiz"/>
 
-
+        <Button Content="Add Chapter" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height ="20" Margin="0,0,45,84.6" Grid.Row="4" Click="Click_Chapter"/>
+        <Button Content="Add Section" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height ="20" RenderTransformOrigin="1.952,29.46" Margin="0,0,45,0" Grid.Row="4" Click="Click_Section"/>
+        <Button Content="Add Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height ="20" Margin="0,0,45,-84.6" Grid.Row="4" Click="Click_Quiz"/>
 
         <!--Button for adding a quiz question-->
         <Button Content="Add Question" Grid.Column="4" Height="40" Margin="103,96,48,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Grid.Row="4" Click="Click_Add_Question_Button"/>
 
         <!--StackPanel where the questions appear-->
-        <StackPanel Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1004" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="196,82,0,0" ScrollViewer.CanContentScroll="True">
-
-        </StackPanel>
+        <StackPanel x:Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1005" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="195,82,0,0" ScrollViewer.CanContentScroll="True"/>
 
         <!--Popup for adding a quiz question-->
         <Popup x:Name="QuizPopup" PlacementRectangle="750,500,0,0">

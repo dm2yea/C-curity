@@ -73,6 +73,16 @@ namespace StudyBuddyApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Chapter {
+            get {
+                object obj = ResourceManager.GetObject("Chapter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap grey_switch {
             get {
                 object obj = ResourceManager.GetObject("grey_switch", resourceCulture);
@@ -86,6 +96,26 @@ namespace StudyBuddyApp.Properties {
         internal static System.Drawing.Bitmap plus_4_xxl {
             get {
                 object obj = ResourceManager.GetObject("plus_4_xxl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Quiz {
+            get {
+                object obj = ResourceManager.GetObject("Quiz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Section {
+            get {
+                object obj = ResourceManager.GetObject("Section", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

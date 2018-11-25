@@ -10,11 +10,13 @@ namespace StudyBuddyApp
     {
         String name;
         String itemID;
+        Chapter parent;
 
-        public section(String name, String itemID)
+        public section(String name, String itemID, Chapter parent)
         {
             this.name = name;
             this.itemID = itemID;
+            this.parent = parent;
         }
 
         public void setName(String name)
@@ -28,6 +30,10 @@ namespace StudyBuddyApp
         public String getItemID()
         {
             return itemID;
+        }
+        public Chapter getParent()
+        {
+            return parent;
         }
     }
 }
