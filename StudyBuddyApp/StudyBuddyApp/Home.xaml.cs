@@ -36,6 +36,11 @@ namespace StudyBuddyApp
         private void NewModule(object sender, RoutedEventArgs e)
         {
             NamePopup.IsOpen = true;
+            getKeyboardFocus();
+        }
+
+        private void getKeyboardFocus()
+        {
             nameTextBox.Focus();
             Keyboard.Focus(nameTextBox);
             nameTextBox.SelectAll();
@@ -74,11 +79,24 @@ namespace StudyBuddyApp
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
             String moduleName = nameTextBox.Text;
-            NamePopup.IsOpen = false;
+            String moduleFile = @"..\..\bin\Debug\" + moduleName + ".xml";
+            if (File.Exists(moduleFile))
+            {
+                InvalidNameWarningPopup.IsOpen = true;
+                Warning_No_Button.Focus();
+            }
+            else
+            {
+                moduleCreate(moduleName);
+                NamePopup.IsOpen = false;
+            }
+        }
 
+        private void moduleCreate(String moduleName)
+        {
             //once we enter in the document name, we will initialize the xml doc before opening into edit mode
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml("<Module><ModuleName>" + moduleName + "</ModuleName><ChapterCount>"+0+"</ChapterCount></Module>");
+            doc.LoadXml("<Module><ModuleName>" + moduleName + "</ModuleName><ChapterCount>" + 0 + "</ChapterCount></Module>");
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -93,7 +111,6 @@ namespace StudyBuddyApp
             // Navigate to edit page
             this.NavigationService.Navigate(new EditMode(moduleName));
         }
-
 
 
         //Handles event when user clicks on the Module they want to open
@@ -179,6 +196,24 @@ namespace StudyBuddyApp
                 }
                 CreateModuleIcon(moduleName, quizAverage);
             }
+        }
+
+        private void Click_Name_Cancel(object sender, RoutedEventArgs e)
+        {
+            NamePopup.IsOpen = false;
+        }
+
+        private void Click_Warning_Yes(object sender, RoutedEventArgs e)
+        {
+            moduleCreate(nameTextBox.Text);
+            InvalidNameWarningPopup.IsOpen = false;
+            NamePopup.IsOpen = false;
+        }
+
+        private void Click_Warning_No(object sender, RoutedEventArgs e)
+        {
+            InvalidNameWarningPopup.IsOpen = false;
+            getKeyboardFocus();
         }
     }
 }
