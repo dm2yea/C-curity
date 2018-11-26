@@ -80,7 +80,14 @@
         <Popup x:Name="InvalidNameWarningPopup" PlacementRectangle="600,400,500,500">
             <Grid Height="65" Width="132" Background= "Gray">
                 <Button x:Name="Warning_Ok_Button" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="0, 25, 0, 0" Click = "Click_Warning_Ok"/>
-                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="There is already a Chapter with that name." VerticalAlignment="Top" FontSize="10" TextAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="There is already a Section or Chapter with that name." VerticalAlignment="Top" FontSize="10" TextAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="InvalidNameWarningPopup_SectionTitle" PlacementRectangle="600,400,500,500">
+            <Grid Height="65" Width="132" Background= "Gray">
+                <Button x:Name="Warning_Ok_Button_SectionTitle" HorizontalAlignment ="Center" Height="24" Width="48" Content="Ok" Margin="0, 25, 0, 0" Click = "Click_Warning_Ok_SectionTitle"/>
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="There is already a Section or Chapter with that name." VerticalAlignment="Top" FontSize="10" TextAlignment="Center" Margin="0,5,0,0"/>
             </Grid>
         </Popup>
 

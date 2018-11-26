@@ -112,7 +112,7 @@ namespace StudyBuddyApp
             IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
             foreach (XElement node in ts)
             {
-                if (node.Value == ModuleData.CurrentSection)
+                if (node.Name == "SectionTitle" && node.Value == ModuleData.CurrentSection && SectionNameAlreadyExists(sectionTitle.Text) == null)
                 {
                     node.Value = sectionTitle.Text;
                 }
@@ -125,9 +125,27 @@ namespace StudyBuddyApp
                     }
                 }
             }
-            doc.Save(moduleName+".xml");
-            ModuleData.CurrentSection = sectionTitle.Text;
-            show(treeView);
+
+            if (ModuleData.CurrentSection != sectionTitle.Text)
+            {
+                if (SectionNameAlreadyExists(sectionTitle.Text) == null)
+                {
+                    section sectionToUpdate = SectionNameAlreadyExists(ModuleData.CurrentSection);
+                    if (sectionToUpdate != null)
+                    {
+                        sectionToUpdate.setName(sectionTitle.Text);
+                        ModuleData.CurrentSection = sectionTitle.Text;
+                        show(treeView);
+                    }
+                }
+                else
+                {
+                    InvalidNameWarningPopup_SectionTitle.IsOpen = true;
+                    Warning_Ok_Button_SectionTitle.Focus();
+                }
+            }
+
+            doc.Save(moduleName + ".xml");
         }
 
         //sends the user back to the homepage
@@ -145,6 +163,22 @@ namespace StudyBuddyApp
                 {
                     return currentChapter;
                 }
+            }
+            return null;
+        }
+
+        //determines if the given name has already been used for a section
+        private section SectionNameAlreadyExists(String title)
+        {
+            foreach (Chapter currentChapter in chapters)
+            {
+                foreach(section currentSection in currentChapter.GetSectionList()) {
+                    if (currentSection.getName() == title)
+                    {
+                        return currentSection;
+                    }
+                }
+                
             }
             return null;
         }
@@ -215,48 +249,57 @@ namespace StudyBuddyApp
             }
             else if (addType == 2)
             {
-                XElement section = new XElement("Section", new XElement("SectionTitle", nameTextBox.Text), new XElement("SectionContent", "Add some notes"),
+                String name = nameTextBox.GetLineText(0);
+                if (SectionNameAlreadyExists(name) == null)
+                {
+                    XElement section = new XElement("Section", new XElement("SectionTitle", nameTextBox.Text), new XElement("SectionContent", "Add some notes"),
                     new XElement("Flagged", 0));
-                foreach (XElement node in ts2)
-                {
-                    if (node.Value == ModuleData.CurrentChapter)
+                    foreach (XElement node in ts2)
                     {
-                        XElement parent = node.Parent;
-                        XElement count = parent.Element("SectionCount");
-                        count.Value = Convert.ToString(Convert.ToInt32(count.Value) + 1);
-                        node.Parent.Add(section);
-                    }
-                }
-
-
-                TreeViewItem item2 = (TreeViewItem)treeView.SelectedItem;
-
-                if (item2 != null)
-                {
-                    foreach (Chapter tempChapter in chapters)
-                    {
-                        if (tempChapter.getItemID() == item2.Name)
+                        if (node.Value == ModuleData.CurrentChapter)
                         {
-                            tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
-                            show(treeView);
-                            item2.MouseLeftButtonUp += Section_Display_Click;
-                            break;
+                            XElement parent = node.Parent;
+                            XElement count = parent.Element("SectionCount");
+                            count.Value = Convert.ToString(Convert.ToInt32(count.Value) + 1);
+                            node.Parent.Add(section);
+                        }
+                    }
+
+
+                    TreeViewItem item2 = (TreeViewItem)treeView.SelectedItem;
+
+                    if (item2 != null)
+                    {
+                        foreach (Chapter tempChapter in chapters)
+                        {
+                            if (tempChapter.getItemID() == item2.Name)
+                            {
+                                tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
+                                show(treeView);
+                                item2.MouseLeftButtonUp += Section_Display_Click;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int x = 0;
+                        foreach (Chapter tempChapter in chapters)
+                        {
+                            x++;
+                            if (x == chapters.Count)
+                            {
+                                tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
+                                show(treeView);
+                                break;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    int x = 0;
-                    foreach (Chapter tempChapter in chapters)
-                    {
-                        x++;
-                        if (x == chapters.Count)
-                        {
-                            tempChapter.GetSectionList().Add(new section(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
-                            show(treeView);
-                            break;
-                        }
-                    }
+                    InvalidNameWarningPopup.IsOpen = true;
+                    Warning_Ok_Button.Focus();
                 }
             }
             else if (addType == 3)
@@ -903,6 +946,13 @@ namespace StudyBuddyApp
             Rename_textBox.Focus();
             Rename_textBox.SelectAll();
             Confirm_Rename_Button.IsDefault = true;
+        }
+
+        private void Click_Warning_Ok_SectionTitle(object sender, RoutedEventArgs e)
+        {
+            InvalidNameWarningPopup_SectionTitle.IsOpen = false;
+            sectionTitle.Focus();
+            sectionTitle.SelectAll();
         }
     }
 }
