@@ -722,7 +722,9 @@ namespace StudyBuddyApp
             Rename_textBox.Focus();
             Rename_textBox.SelectAll();
             Confirm_Rename_Button.IsDefault = true;
+            exitButton.IsEnabled = false;
         }
+
         private void Click_Confirm_Rename(object sender, RoutedEventArgs e)
         {
             String oldModuleFile = @"..\..\bin\Debug\" + moduleName + ".xml";
@@ -753,6 +755,7 @@ namespace StudyBuddyApp
                     }
                 }
                 doc.Save(moduleName + ".xml");
+                exitButton.IsEnabled = true;
             }
         }
         
