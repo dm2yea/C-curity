@@ -124,25 +124,25 @@ namespace StudyBuddyApp
                         node.Value = sectionContent.Text;
                     }
                 }
-                if(node.Name == "Question")
-                {
-                    IEnumerable<XElement> question = node.Elements();
-                    foreach(XElement q in question)
-                    {
-                        if(q.Name == "QuestionType")
-                        {
-                            q.Value = "True/False";
-                        }
-                        if (q.Name == "QuestionContent")
-                        {
-                            q.Value = "The mitochondria is the powerhouse of the cell.";
-                        }
-                        if (q.Name == "QuestionAnswer")
-                        {
-                            q.Value = "True";
-                        }
-                    }
-                }
+                //if (node.Name == "Question")
+                //{
+                //    IEnumerable<XElement> question = node.Elements();
+                //    foreach (XElement q in question)
+                //    {
+                //        if (q.Name == "QuestionType")
+                //        {
+                //            q.Value = "True/False";
+                //        }
+                //        if (q.Name == "QuestionContent")
+                //        {
+                //            q.Value = "The mitochondria is the powerhouse of the cell.";
+                //        }
+                //        if (q.Name == "QuestionAnswer")
+                //        {
+                //            q.Value = "True";
+                //        }
+                //    }
+                //}
             }
 
             if (ModuleData.CurrentSection != sectionTitle.Text)
@@ -163,7 +163,6 @@ namespace StudyBuddyApp
                     Warning_Ok_Button_SectionTitle.Focus();
                 }
             }
-
             doc.Save(moduleName + ".xml");
         }
 
@@ -372,12 +371,12 @@ namespace StudyBuddyApp
             }
         }
 
-        private void Add_Question_XML()
+        private void Add_Question_XML(String q1, String type)
         {
             XDocument doc = XDocument.Load(moduleName + ".xml");
             XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
             IEnumerable<XElement> ts = doc.Root.Elements().Elements();
-            XElement question = new XElement("Question", new XElement("QuestionType", ""), new XElement("QuestionContent", "Add some notes"),
+            XElement question = new XElement("Question", new XElement("QuestionType", type), new XElement("QuestionContent", q1),
                     new XElement("QuestionAnswer", 0), new XElement("PossibleAnswers", 0));
             foreach (XElement node in ts)
             {
@@ -442,7 +441,7 @@ namespace StudyBuddyApp
         //method for adding a Multiple Choice question template
         private void Click_Multiple_Choice_Button(object sender, RoutedEventArgs e)
         {
-            Add_Question_XML();
+            
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
@@ -522,10 +521,13 @@ namespace StudyBuddyApp
 
             question.Content = c1;
             quizSpace.Children.Add(question); //adds the question # group box to the quiz stack panel
+            string type = "Multiple Choice";
+            string q1 = t1.Text.ToString();
+            Add_Question_XML(q1, type);
         }
         private void Click_True_False_Button(object senter, RoutedEventArgs e)
         {
-            Add_Question_XML();
+            
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
@@ -569,10 +571,13 @@ namespace StudyBuddyApp
 
             question.Content = c1;
             quizSpace.Children.Add(question); //adds the question # group box to the quiz stack panel
+            string type = "True or False";
+            string q1 = t1.Text.ToString();
+            Add_Question_XML(q1, type);
         }
         private void Click_Fill_Blank_Button(object senter, RoutedEventArgs e)
         {
-            Add_Question_XML();
+            
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
@@ -614,6 +619,9 @@ namespace StudyBuddyApp
 
             question.Content = c1;
             quizSpace.Children.Add(question); //adds the question # group box to the quiz stack panel
+            string type = "Fill in the Blank";
+            string q1 = t1.Text.ToString();
+            Add_Question_XML(q1, type);
         }
         private void Click_Quiz_Cancel_Button(object senter, RoutedEventArgs e)
         {
