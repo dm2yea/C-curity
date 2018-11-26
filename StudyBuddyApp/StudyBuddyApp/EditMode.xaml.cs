@@ -68,7 +68,7 @@ namespace StudyBuddyApp
                     {
                         if (childElement.Name == "ChapterTitle")
                         {
-                            Chapter sectionParent = chapterNameAlreadyExists(childElement.Value);
+                            Chapter sectionParent = ChapterNameAlreadyExists(childElement.Value);
                             if(sectionParent != null)
                             {
                                 sectionParent.GetSectionList().Add(new section(node.Value, "_" + itemCount++, sectionParent));
@@ -81,13 +81,15 @@ namespace StudyBuddyApp
             show(treeView);
             Rename_textBox.Visibility = Visibility.Hidden;
         }
-
+        
+        //sends the user back to the homepage
         private void Exit_To_Home(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Home());
         }
 
-        private Chapter chapterNameAlreadyExists(String title)
+        //determines if the given name has already been used for a chapter
+        private Chapter ChapterNameAlreadyExists(String title)
         {
             foreach(Chapter currentChapter in chapters)
             {
@@ -99,8 +101,7 @@ namespace StudyBuddyApp
             return null;
         }
 
-        
-
+        //creates chapter, section, or quiz
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
             if (addType == 1)
@@ -141,7 +142,7 @@ namespace StudyBuddyApp
             if (addType == 1)
             {
                 String name = nameTextBox.GetLineText(0);
-                if (chapterNameAlreadyExists(name) == null)
+                if (ChapterNameAlreadyExists(name) == null)
                 {
                     XElement chapter = new XElement("Chapter", new XElement("ChapterTitle", nameTextBox.Text), new XElement("SectionCount", 0),
                         new XElement("QuizCount", 0), new XElement("QuizAverage", "-"));
