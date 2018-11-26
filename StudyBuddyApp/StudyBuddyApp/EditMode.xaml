@@ -34,7 +34,7 @@
                 </ContextMenu>
             </TextBlock.ContextMenu>
         </TextBlock>
-
+  
         <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
         <Button x:Name="Confirm_Rename_Button" Height="0" Width="0" Click="Click_Confirm_Rename"/>
 

@@ -59,7 +59,7 @@ namespace StudyBuddyApp
 
             IEnumerable<XElement> ts2 = doc.Root.Elements().Elements().Elements();
             foreach(XElement node in ts2)
-            { 
+            {
                 if (node.Name == "SectionTitle")
                 {
                     XElement parentChapter = node.Parent.Parent;
@@ -99,7 +99,7 @@ namespace StudyBuddyApp
             return null;
         }
 
-        
+
 
         private void Click_Name_Ok(object sender, RoutedEventArgs e)
         {
@@ -692,17 +692,17 @@ namespace StudyBuddyApp
                 section sectionCon = treeViewItemToSection(item);
                 if (sectionCon != null)
                 {
-                  IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
-                  foreach (XElement node in ts)
-                  {
-                     if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
-                     {
-                        sectionTitle.Text = node.Value;
-                        XElement tempNode = node.Parent;
-                        tempNode = tempNode.Element("SectionContent");
-                        sectionContent.Text = tempNode.Value;
-                     }
-                  }
+                    IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+                    foreach (XElement node in ts)
+                    {
+                        if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
+                        {
+                            sectionTitle.Text = node.Value;
+                            XElement tempNode = node.Parent;
+                            tempNode = tempNode.Element("SectionContent");
+                            sectionContent.Text = tempNode.Value;
+                        }
+                    }
                 }
             }
             e.Handled = true;
@@ -758,7 +758,7 @@ namespace StudyBuddyApp
                 exitButton.IsEnabled = true;
             }
         }
-        
+
 
         private void Click_Module_Exists_Ok(object sender, RoutedEventArgs e)
         {
