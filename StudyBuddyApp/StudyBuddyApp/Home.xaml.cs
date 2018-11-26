@@ -133,7 +133,7 @@ namespace StudyBuddyApp
                 ModuleData.ModuleName = title;
                 if (viewMode)
                 {
-                    this.NavigationService.Navigate(new StudyMode());
+                    this.NavigationService.Navigate(new StudyMode(title));
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace StudyBuddyApp
                 ModuleData.ModuleName = moduleName;
                 if (viewMode)
                 {
-                    this.NavigationService.Navigate(new StudyMode());
+                    this.NavigationService.Navigate(new StudyMode(moduleName));
                 }
                 else
                 {

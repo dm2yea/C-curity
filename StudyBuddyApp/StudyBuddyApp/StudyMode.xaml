@@ -4,11 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StudyBuddyApp"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+        mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
       Title="StudyMode">
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -23,10 +24,54 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.ColumnSpan="5" Background="Gray" Margin="0,0,0,68"/>
-        <DockPanel Name ="TitleBar" Grid.ColumnSpan="1" Grid.RowSpan="5" Background="#FF3399FF" Margin="0,0,44,0"/>
-        <Button x:Name="exitButton" Content="Exit" Grid.Column="4" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" Width="60" Height="40" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
-        <TextBlock x:Name="box" Text="Study Mode" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="53,73,77,45"/>
-        <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.Column="1" Margin="70,43,0,0" Grid.Row="1"/>
+
+
+        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="5,0,0,0" Height="82" Width="955" FontSize="55" Grid.Column="1">
+        </TextBlock>
+
+        <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="82" Width="960" FontSize="55" Grid.Column="1"/>
+
+
+        <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="750" VerticalAlignment="Top" Width="195" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1" Background="#FF3399FF">
+
+            <TreeView.Resources>
+                <Style TargetType="TreeViewItem">
+                    <!-- We have to select the item which is right-clicked on -->
+
+                    <EventSetter Event="MouseLeftButtonUp" Handler="Section_Display_Click"/>
+                </Style>
+            </TreeView.Resources>
+
+
+            <TreeViewItem>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu x:Name="treeViewContextMenu">
+                        <MenuItem x:Name="flagMenuItem" Header="Flag"/>
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
+
+        </TreeView>
+
+        <Button x:Name="saveButton" Content="Save" Grid.Column="4" Height="40" Margin="90,21,90,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
+        <Button x:Name="exitButton" Content="Exit" Grid.Column="4" Height="40" Margin="170,21,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
+
+        <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
+            <Grid Height="65" Width="132" RenderTransformOrigin="0.453,0.517" Background= "Gray">
+                <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Enter Name" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.435" Margin="7,6,0,0"/>
+            </Grid>
+        </Popup>
+
+
+
+        <!--StackPanel where the questions appear-->
+        <StackPanel x:Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1005" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="195,82,0,0" ScrollViewer.CanContentScroll="True"/>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65" >
+            <TextBlock x:Name="sectionTitle" Height="59" TextWrapping="Wrap" Margin="0,0,0,0" FontSize="40" TextAlignment="Center" />
+            <TextBlock x:Name="sectionContent"  Height="462" TextWrapping="Wrap" />
+        </StackPanel>
+
     </Grid>
+
 </Page>

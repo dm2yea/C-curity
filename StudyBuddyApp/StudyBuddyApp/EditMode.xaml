@@ -27,7 +27,7 @@
 
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="150" Background="Gray" Margin="0,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="195" Grid.RowSpan="1" RenderTransformOrigin="0.5,0.5"/>
         <Border BorderBrush="Black" Background="Gray" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="-45,0,0,68"/>
-        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55">
+        <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="82" Width="960" FontSize="55" Grid.Column="1">
             <TextBlock.ContextMenu>
                 <ContextMenu x:Name="textBlockContextMenu" Placement="AbsolutePoint">
                     <MenuItem x:Name="textBlockRename" Header="Rename Module" Click="Click_Module_Rename"/>
@@ -35,7 +35,7 @@
             </TextBlock.ContextMenu>
         </TextBlock>
 
-        <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
+        <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="5,0,0,0" Height="82" Width="955" FontSize="55" Grid.Column="1"/>
         <Button x:Name="Confirm_Rename_Button" Height="0" Width="0" Click="Click_Confirm_Rename"/>
 
         <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="195" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1">
