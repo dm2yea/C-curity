@@ -6,29 +6,19 @@ using System.Threading.Tasks;
 
 namespace StudyBuddyApp
 {
-    public class Chapter
+    public class Quizzes
     {
-        private List<section> Sections;
-        private List<Quizzes> Quizzes;
         String name;
         String itemID;
+        Chapter parent;
 
-        public Chapter(String name, String itemID)
+        public Quizzes(String name, String itemID, Chapter parent)
         {
             this.name = name;
             this.itemID = itemID;
-            Sections = new List<section>();
-            Quizzes = new List<Quizzes>();
+            this.parent = parent;
         }
 
-        public List<section> GetSectionList()
-        {
-            return Sections;
-        }
-        public List<Quizzes> GetQuizList()
-        {
-            return Quizzes;
-        }
         public void setName(String name)
         {
             this.name = name;
@@ -41,6 +31,9 @@ namespace StudyBuddyApp
         {
             return itemID;
         }
-
+        public Chapter getParent()
+        {
+            return parent;
+        }
     }
 }
