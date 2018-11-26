@@ -103,7 +103,33 @@ namespace StudyBuddyApp
             show(treeView);
             Rename_textBox.Visibility = Visibility.Hidden;
         }
-        
+
+        //saves the contents of the current section
+        private void Save_Contents(object sender, RoutedEventArgs e)
+        {
+            doc = XDocument.Load(moduleName + ".xml");
+            XElement parent = null;
+            IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+            foreach (XElement node in ts)
+            {
+                if (node.Value == ModuleData.CurrentSection)
+                {
+                    node.Value = sectionTitle.Text;
+                }
+                if(node.Name == "SectionContent")
+                {
+                    parent = node.Parent;
+                    if(parent.Element("SectionTitle").Value == ModuleData.CurrentSection)
+                    {
+                        node.Value = sectionContent.Text;
+                    }
+                }
+            }
+            doc.Save(moduleName+".xml");
+            ModuleData.CurrentSection = sectionTitle.Text;
+            show(treeView);
+        }
+
         //sends the user back to the homepage
         private void Exit_To_Home(object sender, RoutedEventArgs e)
         {
@@ -758,9 +784,7 @@ namespace StudyBuddyApp
         public void Section_Display_Click(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = (TreeViewItem)treeView.SelectedItem;
-            ModuleData.CurrentSection = this.Name;
-
-
+            
             if (item != null)
             {
                 doc = XDocument.Load(moduleName + ".xml");
@@ -774,6 +798,7 @@ namespace StudyBuddyApp
                   {
                      if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
                      {
+                        ModuleData.CurrentSection = node.Value;
                         sectionTitle.Text = node.Value;
                         XElement tempNode = node.Parent;
                         tempNode = tempNode.Element("SectionContent");
