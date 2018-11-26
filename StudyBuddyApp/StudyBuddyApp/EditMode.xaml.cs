@@ -79,6 +79,26 @@ namespace StudyBuddyApp
                     }
                 }
             }
+            IEnumerable<XElement> ts3 = doc.Root.Elements().Elements().Elements();
+            foreach (XElement node in ts3)
+            {
+                if (node.Name == "QuizTitle")
+                {
+                    XElement parentChapter = node.Parent.Parent;
+                    IEnumerable<XElement> parentChapterElements = parentChapter.Elements();
+                    foreach (XElement childElement in parentChapterElements)
+                    {
+                        if (childElement.Name == "ChapterTitle")
+                        {
+                            Chapter quizParent = ChapterNameAlreadyExists(childElement.Value);
+                            if (quizParent != null)
+                            {
+                                quizParent.GetQuizList().Add(new Quizzes(node.Value, "_" + itemCount++, quizParent));
+                            }
+                        }
+                    }
+                }
+            }
 
             show(treeView);
             Rename_textBox.Visibility = Visibility.Hidden;
@@ -250,6 +270,36 @@ namespace StudyBuddyApp
                         XElement count = parent.Element("QuizCount");
                         count.Value = Convert.ToString(Convert.ToInt32(count.Value) + 1);
                         node.Parent.Add(quiz);
+                    }
+                }
+
+                TreeViewItem item3 = (TreeViewItem)treeView.SelectedItem;
+
+                if (item3 != null)
+                {
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        if (tempChapter.getItemID() == item3.Name)
+                        {
+                            tempChapter.GetQuizList().Add(new Quizzes(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
+                            show(treeView);
+                            //item3.MouseLeftButtonUp += Quiz_Display_Click;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    int x = 0;
+                    foreach (Chapter tempChapter in chapters)
+                    {
+                        x++;
+                        if (x == chapters.Count)
+                        {
+                            tempChapter.GetQuizList().Add(new Quizzes(nameTextBox.GetLineText(0), "_" + itemCount++, tempChapter));
+                            show(treeView);
+                            break;
+                        }
                     }
                 }
             }
@@ -586,6 +636,23 @@ namespace StudyBuddyApp
             return returnValue;
         }
 
+        private Quizzes treeViewItemToQuiz(TreeViewItem item)
+        {
+            Quizzes returnValue = null;
+            foreach (Chapter currentChapter in chapters)
+            {
+                foreach (Quizzes currentQuiz in currentChapter.GetQuizList())
+                {
+                    if (currentQuiz.getItemID() == item.Name)
+                    {
+                        returnValue = currentQuiz;
+                        break;
+                    }
+                }
+            }
+            return returnValue;
+        }
+
         /* Tanner Chauncy - 11/24/2018
          * TreeViewItem_PreviewMouseRightButtonDown() - This method handles the task of showing the context menu correctly depending on
          * the type of TreeViewItem being right clicked.
@@ -663,6 +730,11 @@ namespace StudyBuddyApp
                 foreach (section currentSection in currentChapter.GetSectionList())
                 {
                     TreeViewItem subItem = GetTreeView(currentSection.getItemID(), currentSection.getName(), "Section.png");
+                    item.Items.Add(subItem);
+                }
+                foreach (Quizzes currentQuiz in currentChapter.GetQuizList())
+                {
+                    TreeViewItem subItem = GetTreeView(currentQuiz.getItemID(), currentQuiz.getName(), "Section.png");
                     item.Items.Add(subItem);
                 }
                 tree.Items.Add(item);
@@ -744,6 +816,34 @@ namespace StudyBuddyApp
             }
             e.Handled = true;
         }
+
+        //public void Quiz_Display_Click(object sender, MouseButtonEventArgs e)
+        //{
+        //    TreeViewItem item = (TreeViewItem)treeView.SelectedItem;
+        //    ModuleData.CurrentSection = this.Name;
+
+
+        //    if (item != null)
+        //    {
+        //        doc = XDocument.Load(moduleName + ".xml");
+        //        Quiz quizCon = treeViewItemToQuiz(item);
+        //        if (sectionCon != null)
+        //        {
+        //            IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+        //            foreach (XElement node in ts)
+        //            {
+        //                if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
+        //                {
+        //                    sectionTitle.Text = node.Value;
+        //                    XElement tempNode = node.Parent;
+        //                    tempNode = tempNode.Element("SectionContent");
+        //                    sectionContent.Text = tempNode.Value;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    e.Handled = true;
+        //}
 
         private void Click_Warning_Ok(object sender, RoutedEventArgs e)
         {
