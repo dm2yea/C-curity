@@ -124,6 +124,25 @@ namespace StudyBuddyApp
                         node.Value = sectionContent.Text;
                     }
                 }
+                if(node.Name == "Question")
+                {
+                    IEnumerable<XElement> question = node.Elements();
+                    foreach(XElement q in question)
+                    {
+                        if(q.Name == "QuestionType")
+                        {
+                            q.Value = "True/False";
+                        }
+                        if (q.Name == "QuestionContent")
+                        {
+                            q.Value = "The mitochondria is the powerhouse of the cell.";
+                        }
+                        if (q.Name == "QuestionAnswer")
+                        {
+                            q.Value = "True";
+                        }
+                    }
+                }
             }
 
             if (ModuleData.CurrentSection != sectionTitle.Text)
@@ -353,6 +372,23 @@ namespace StudyBuddyApp
             }
         }
 
+        private void Add_Question_XML()
+        {
+            XDocument doc = XDocument.Load(moduleName + ".xml");
+            XmlWriterSettings settings = new XmlWriterSettings { Indent = true };
+            IEnumerable<XElement> ts = doc.Root.Elements().Elements();
+            XElement question = new XElement("Question", new XElement("QuestionType", ""), new XElement("QuestionContent", "Add some notes"),
+                    new XElement("QuestionAnswer", 0), new XElement("PossibleAnswers", 0));
+            foreach (XElement node in ts)
+            {
+                if (node.Name == "Quiz")
+                {
+                    node.Add(question);
+                }
+            }
+            doc.Save(moduleName + ".xml");
+        }
+
         /* Tanner Chauncy - 11/24/2018
          * getKeyboardFocus() - This method improves quality of life for the user when adding a new item. It resets the text in the new
          * item popup textbox, diverts focus to the textbox, selects all of the text in the textbox, and allows the user to press enter
@@ -406,6 +442,7 @@ namespace StudyBuddyApp
         //method for adding a Multiple Choice question template
         private void Click_Multiple_Choice_Button(object sender, RoutedEventArgs e)
         {
+            Add_Question_XML();
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
@@ -488,6 +525,7 @@ namespace StudyBuddyApp
         }
         private void Click_True_False_Button(object senter, RoutedEventArgs e)
         {
+            Add_Question_XML();
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
@@ -534,6 +572,7 @@ namespace StudyBuddyApp
         }
         private void Click_Fill_Blank_Button(object senter, RoutedEventArgs e)
         {
+            Add_Question_XML();
             QuizPopup.IsOpen = false;
             qCount++; //updating question number
 
