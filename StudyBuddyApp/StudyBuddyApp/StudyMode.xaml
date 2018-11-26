@@ -28,16 +28,18 @@
 
         <TextBlock x:Name="moduleNameBar" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PlaceHolder" VerticalAlignment="Top" Grid.ColumnSpan="5" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55">
         </TextBlock>
+        <Grid Background="#FF3399FF" HorizontalAlignment="Left" Width="1200" Grid.ColumnSpan="5" Height="95" VerticalAlignment="Top">
 
-        <TextBox x:Name="Rename_textBox" CaretBrush="Black" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="4" Margin="195,0,0,0" Height="82" Width="1005" FontSize="55"/>
-        
+           
+            <Label x:Name="Rename_textBox" Content="Label" HorizontalAlignment="Left"  Margin="195,0,0,0" Width="1005" FontSize="55" Height="82" VerticalAlignment="Top"/>
+        </Grid>
 
         <TreeView x:Name="treeView"  HorizontalAlignment="Left" Height="750" VerticalAlignment="Top" Width="195" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1">
 
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <!-- We have to select the item which is right-clicked on -->
-                    
+
                     <EventSetter Event="MouseLeftButtonUp" Handler="Section_Display_Click"/>
                 </Style>
             </TreeView.Resources>
@@ -63,12 +65,12 @@
         </Popup>
 
 
-       
+
         <!--StackPanel where the questions appear-->
         <StackPanel x:Name="quizSpace" HorizontalAlignment="Left" Height="668" VerticalAlignment="Top" Width="1005" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="195,82,0,0" ScrollViewer.CanContentScroll="True"/>
 
         <!--Popup for adding a quiz question-->
-       
+
 
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65" >
             <TextBlock x:Name="sectionTitle" Height="59" TextWrapping="Wrap" Margin="0,0,0,0" FontSize="40" TextAlignment="Center" />

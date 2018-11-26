@@ -78,7 +78,8 @@
                 }
 
                 show(treeView);
-                Rename_textBox.Visibility = Visibility.Hidden;
+            //Rename_textBox.Visibility = Visibility.Hidden;
+            Rename_textBox.Content = moduleName;
             }
 
             private void Exit_To_Home(object sender, RoutedEventArgs e)
