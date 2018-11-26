@@ -708,7 +708,7 @@ namespace StudyBuddyApp
                 }
                 foreach (Quizzes currentQuiz in currentChapter.GetQuizList())
                 {
-                    TreeViewItem subItem = GetTreeView(currentQuiz.getItemID(), currentQuiz.getName(), "Section.png");
+                    TreeViewItem subItem = GetTreeView(currentQuiz.getItemID(), currentQuiz.getName(), "Quiz.png");
                     item.Items.Add(subItem);
                 }
                 tree.Items.Add(item);

@@ -149,18 +149,18 @@ namespace StudyBuddyApp
         private void moduleDoesNotExist(String moduleName)
         {
             Grid grid = null;
-            foreach(UIElement tempGrid in ScrollGrid.Children)
+            foreach (UIElement tempGrid in ScrollGrid.Children)
             {
                 grid = (Grid)tempGrid;
-                break;
-            }
-            foreach( UIElement button in grid.Children)
-            {
-                Button tempButton = (Button)button;
-                if(tempButton.Name == "Button_" + moduleName.Replace(' ', '_'))
+                foreach (UIElement button in grid.Children)
                 {
-                    moduleDeletedPopup.IsOpen = true;
-                    module_Deleted_Warning_Ok_Button.Focus();
+                    Button tempButton = (Button)button;
+                    if (tempButton.Name == "Button_" + moduleName.Replace(' ', '_'))
+                    {
+                        moduleDeletedPopup.IsOpen = true;
+                        module_Deleted_Warning_Ok_Button.Focus();
+                        tempButton.IsEnabled = false;
+                    }
                 }
             }
         }
