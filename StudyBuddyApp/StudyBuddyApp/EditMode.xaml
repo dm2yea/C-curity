@@ -66,7 +66,7 @@
 
         </TreeView>
 
-        <Button x:Name="saveButton" Content="Save" Grid.Column="4" Height="40" Margin="90,21,90,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325"/>
+        <Button x:Name="saveButton" Content="Save" Grid.Column="4" Height="40" Margin="90,21,90,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Click="Save_Contents"/>
         <Button x:Name="exitButton" Content="Exit" Grid.Column="4" Height="40" Margin="170,21,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.758,-0.325" Click= "Exit_To_Home"/>
 
         <Popup x:Name="NamePopup" PlacementRectangle="600,400,500,500">
