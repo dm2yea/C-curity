@@ -37,6 +37,8 @@ namespace StudyBuddyApp
             moduleNameBar.Text = title;
             itemCount = 0;
             chapters = new List<Chapter>();
+            sectionTitle.Visibility = Visibility.Hidden;
+            sectionContent.Visibility = Visibility.Hidden;
 
             doc = XDocument.Load(moduleName + ".xml");
             IEnumerable<XElement> ts = doc.Root.Elements().Elements();
@@ -693,7 +695,9 @@ namespace StudyBuddyApp
                 section sectionCon = treeViewItemToSection(item);
                 if (sectionCon != null)
                 {
-                  IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
+                    sectionTitle.Visibility = Visibility.Visible;
+                    sectionContent.Visibility = Visibility.Visible;
+                    IEnumerable<XElement> ts = doc.Root.Elements().Elements().Elements();
                   foreach (XElement node in ts)
                   {
                      if (node.Name == "SectionTitle" && node.Value == sectionCon.getName())
@@ -702,8 +706,15 @@ namespace StudyBuddyApp
                         XElement tempNode = node.Parent;
                         tempNode = tempNode.Element("SectionContent");
                         sectionContent.Text = tempNode.Value;
+                        sectionContent.Focus();
+                        sectionContent.SelectAll();
                      }
                   }
+                }
+                else
+                {
+                    sectionTitle.Visibility = Visibility.Hidden;
+                    sectionContent.Visibility = Visibility.Hidden;
                 }
             }
             e.Handled = true;

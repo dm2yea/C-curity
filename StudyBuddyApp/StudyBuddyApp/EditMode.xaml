@@ -105,9 +105,9 @@
             </Grid>
         </Popup>
 
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65" >
+        <StackPanel x:Name="sectionDataContainer" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="4" Margin="0,0,0,65" >
             <TextBox x:Name="sectionTitle" Height="59" TextWrapping="Wrap" Margin="0,0,0,0" FontSize="40" TextAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-            <TextBox x:Name="sectionContent" AcceptsReturn="true"  Height="462" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1"/>
+            <TextBox x:Name="sectionContent" AcceptsReturn="true"  Height="476" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1"/>
         </StackPanel>
 
         <Popup x:Name="ModuleExistsWarningPopup" PlacementRectangle="500,500,500,500">
